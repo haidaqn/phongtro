@@ -10,6 +10,10 @@ module.exports = {
     ],
     theme: {
         extend: {
+            backgroundColor: {
+                main: '#1266dd',
+            },
+            colors: { main: '#1266dd' },
             flex: {
                 1: '1 1 0%',
                 2: '2 2 0%',

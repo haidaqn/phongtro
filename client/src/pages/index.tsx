@@ -7,6 +7,7 @@ function Home() {
                 <h1>content</h1>
             </div>
         </MainLayout>
-);}
+    );
+}
 
 export default Home;

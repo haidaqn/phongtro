@@ -6,28 +6,28 @@ import storage from 'redux-persist/lib/storage';
 import thunk, { ThunkAction } from 'redux-thunk';
 
 const persistConfig = {
-  key: 'root',
-  storage,
-  stateReconciler: autoMergeLevel2
+    key: 'root',
+    storage,
+    stateReconciler: autoMergeLevel2,
 };
 
 const authPersistConfig = {
-  ...persistConfig,
-  key: 'auth',
-  whitelist: ['isLoggedIn']
+    ...persistConfig,
+    key: 'auth',
+    whitelist: ['isLoggedIn'],
 };
 
 export const store = configureStore({
-  reducer: {
-    // auth: persistReducer<IAuthSlice>(authPersistConfig, AuthReducer),
-    // course: CourseReducer
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-      }
-    }).concat(thunk)
+    reducer: {
+        // auth: persistReducer<IAuthSlice>(authPersistConfig, AuthReducer),
+        // course: CourseReducer
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }).concat(thunk),
 });
 
 export const persisitor = persistStore(store);
