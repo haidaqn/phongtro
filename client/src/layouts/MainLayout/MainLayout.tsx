@@ -10,7 +10,7 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
     <Layout style={{width:'full'}}>
         <CustomHeader />
         <Layout>
-          <Content style={{ marginTop: '10px', marginLeft: '10%', marginRight:'10%' }}>
+          <Content style={{ marginTop: '10px', marginLeft: '10%', marginRight:'10%', overflow:'hidden' }}>
             {children}
           </Content>
         </Layout>
