@@ -5,36 +5,45 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       phone: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       zalo: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+      },
+      refresh_token: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Users');
-  }
+  },
 };

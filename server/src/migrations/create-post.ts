@@ -6,60 +6,60 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       star: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       labelCode: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       address: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       attributesId: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       categoryCode: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       description: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       userId: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       overviewId: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       imagesId: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Posts');
-  }
+  },
 };

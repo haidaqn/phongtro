@@ -5,34 +5,36 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       price: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       acreage: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },published: {
+        allowNull: false,
+      },
+      published: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },hashtag: {
+        allowNull: false,
+      },
+      hashtag: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Attributes');
-  }
+  },
 };

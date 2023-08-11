@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MainModule } from './modules/main.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { User } from './modules/user/entities/user.entity';
 @Module({
   imports: [
     MainModule,
@@ -13,8 +14,8 @@ import { DataSource } from 'typeorm';
       username: 'root',
       password: '',
       database: 'phong-tro-123',
-      entities: [],
-      synchronize: false,
+      entities: [User],
+      synchronize: true,
     }),
   ],
 })

@@ -5,34 +5,36 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       code: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
       },
       value: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },header: {
+        allowNull: false,
+      },
+      header: {
         type: Sequelize.INTEGER,
-        allowNull: false
-      },subheader: {
+        allowNull: false,
+      },
+      subheader: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Category');
-  }
+  },
 };
