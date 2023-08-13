@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Post } from '../../post/entities/post.entity';
 
-@Entity()
+@Entity('users')
 export class User {
     @PrimaryGeneratedColumn() // Sử dụng decorator này để tạo cột chính tự động tăng
     id: string;
