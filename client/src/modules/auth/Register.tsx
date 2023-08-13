@@ -1,14 +1,15 @@
 import React from 'react';
-import MainLayout from '@/layouts/MainLayout/MainLayout';
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import { Form, Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import authApi from '@/apiClient/auth';
 
 const validationSchema = yup.object().shape({
-    email: yup.string().email('Email không hợp lệ').required('Vui lòng nhập email'),
     phone: yup.string().required('Vui lòng nhập số điện thoại'),
+    name: yup.string().required('Vui lòng nhập tên'),
     password: yup
         .string()
         .required('Vui lòng nhập mật khẩu')
@@ -23,34 +24,35 @@ const validationSchema = yup.object().shape({
 const RegisterModule = () => {
     const formik = useFormik({
         initialValues: {
-            email: '',
+            name : '',
             phone: '',
             password: '',
             confirmPassword: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-            // Xử lý logic đăng ký ở đây
-            console.log(values);
+        onSubmit: async(values) => {
+            const {confirmPassword, ...data } = values;
+            const response = await authApi.register(data);
+            console.log(response);
         },
     });
 
     return (
-        <MainLayout>
+        <AuthLayout>
             <div className="flex items-center justify-center my-7">
                 <div className="bg-white w-[600px] p-16 border rounded-lg flex flex-col gap-5">
                     <h1 className="text-3xl font-bold">Đăng ký</h1>
                     <Form onFinish={formik.handleSubmit} layout="vertical">
                         <div className="mb-2">
-                            <label className="text-xl uppercase font-medium">số điện thoại</label>
+                            <label className="text-xl uppercase font-medium">Họ và tên</label>
                             <Input
-                                name="email"
-                                value={formik.values.email}
+                                name="name"
+                                value={formik.values.name}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                             />
-                            {formik.touched.email && formik.errors.email ? (
-                                <div className="text-red-500">{formik.errors.email}</div>
+                            {formik.touched.name && formik.errors.name ? (
+                                <div className="text-red-500">{formik.errors.name}</div>
                             ) : null}
                         </div>
                         <div className="mb-2">
@@ -104,7 +106,7 @@ const RegisterModule = () => {
                     </div>
                 </div>
             </div>
-        </MainLayout>
+        </AuthLayout>
     );
 };
 

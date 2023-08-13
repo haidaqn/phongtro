@@ -1,26 +1,27 @@
-import { configureStore, Action } from '@reduxjs/toolkit';
-import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
-import persistReducer from 'redux-persist/es/persistReducer';
+import { Action, configureStore } from '@reduxjs/toolkit';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import storage from 'redux-persist/lib/storage';
-import thunk, { ThunkAction } from 'redux-thunk';
+import thunk from 'redux-thunk';
+import { ThunkAction } from 'redux-thunk';
+import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
+import persistReducer from 'redux-persist/lib/persistReducer';
+import userReducer, { user } from '@/features/useSlice';
 
 const persistConfig = {
     key: 'root',
-    storage,
+    storage: storage,
     stateReconciler: autoMergeLevel2,
 };
 
-const authPersistConfig = {
+const userPersistConfig = {
     ...persistConfig,
-    key: 'auth',
-    whitelist: ['isLoggedIn'],
+    key: 'root',
+    whitelist: ['isLoggedIn','data'],
 };
 
 export const store = configureStore({
     reducer: {
-        // auth: persistReducer<IAuthSlice>(authPersistConfig, AuthReducer),
-        // course: CourseReducer
+        user: persistReducer<user>(userPersistConfig, userReducer),
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

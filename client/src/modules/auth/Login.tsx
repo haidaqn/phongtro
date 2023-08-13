@@ -1,9 +1,11 @@
 import React from 'react';
 import MainLayout from '@/layouts/MainLayout/MainLayout';
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout'
 import { Form, Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
+import authApi from '@/apiClient/auth';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -22,14 +24,15 @@ const LoginModule = () => {
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
+        onSubmit: async(values) => {
             // Xử lý logic đăng nhập ở đây
-            console.log(values);
+            const response = await authApi.login(values);
+            console.log(response);
         },
     });
 
     return (
-        <MainLayout>
+        <AuthLayout>
             <div className="flex items-center justify-center my-7">
                 <div className="bg-white w-[600px] p-16 border rounded-lg flex flex-col gap-5">
                     <h1 className="text-3xl font-bold">Đăng nhập</h1>
@@ -78,7 +81,7 @@ const LoginModule = () => {
                     </div>
                 </div>
             </div>
-        </MainLayout>
+        </AuthLayout>
     );
 };
 

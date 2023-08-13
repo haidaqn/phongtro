@@ -27,13 +27,5 @@ export const items: MenuItem[] = [
     {
         label: 'Tìm người ở ghép',
         key: '/tim-nguoi-o-ghep',
-    },
-    {
-        label: 'Tin tức',
-        key: '/tin-tuc',
-    },
-    {
-        label: 'Bảng giá dịch vụ',
-        key: '/bang-gia-dich-vu',
-    },
+    }
 ];
