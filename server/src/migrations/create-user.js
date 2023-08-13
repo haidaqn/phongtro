@@ -14,17 +14,14 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
       },
-      zalo: {
-        type: Sequelize.STRING,
-      },
       phone: {
         type: Sequelize.STRING,
       },
-      fbUrl: {
+      refresh_token: {
         type: Sequelize.STRING,
       },
-      avatar: {
-        type: Sequelize.BLOB("long"),
+      access_token: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

@@ -4,15 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcryptjs";
 
 import generateCode from "../utils/generateCode";
-import chothuecanho from "../../data/chothuecanho.json";
+// import chothuecanho from "../../data/chothuecanho.json";
 import chothuematbang from "../../data/chothuematbang.json";
 import nhachothue from "../../data/nhachothue.json";
 import chothuephongtro from "../../data/chothuephongtro.json";
 
-const hashPassword = (password) =>
-  bcrypt.hashSync(password, bcrypt.genSaltSync(12));
-
-const dataBody = chothuecanho.body;
+const hashPassword = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(12));
+const dataBody = chothuephongtro.body;
 
 export const insertService = () =>
   new Promise((resolve, reject) => {
