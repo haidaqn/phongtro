@@ -19,15 +19,11 @@ axiosClient.interceptors.request.use(
 
 // Add a response interceptor
 axiosClient.interceptors.response.use(
-    function (response: { data: any; }) {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
-        return response.data;
+    function (response) {
+        return response?.data;
     },
-    function (error: { response: { data: any; }; }) {
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
-        return Promise.reject(error.response.data);
+    function (error) {
+        return Promise.reject(error);
     }
 );
 

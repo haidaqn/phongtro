@@ -6,6 +6,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import authApi from '@/apiClient/auth';
+import { useAppDispatch } from '@/app/hooks';
+import { setIsLoggedIn , setData} from '@/features/useSlice';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -15,9 +17,19 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Vui lòng nhập mật khẩu').min(8, 'Mật khẩu phải có ít nhất 8 ký tự'),
 });
 
+interface dataResponse {
+    err: number;
+    msg: string;
+    token: string;
+    data: {
+        name: string,
+        phone :string,
+    };
+}
+
 const LoginModule = () => {
     const router = useRouter();
-
+    const dispatch = useAppDispatch();
     const formik = useFormik({
         initialValues: {
             phone: '',
@@ -25,9 +37,14 @@ const LoginModule = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async(values) => {
-            // Xử lý logic đăng nhập ở đây
-            const response = await authApi.login(values);
-            console.log(response);
+            const response: unknown = await authApi.login(values);
+            const responseCover: dataResponse = response as dataResponse;
+            // console.log(response);
+            if (!responseCover.err) {
+                dispatch(setIsLoggedIn(!responseCover?.err));
+                dispatch(setData(responseCover.data));
+                router.push('/');
+            }
         },
     });
 

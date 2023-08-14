@@ -7,7 +7,6 @@ export interface user {
 }
 
 const initialData = {
-    id: 0,
     name: '',
     phone:'',
 };

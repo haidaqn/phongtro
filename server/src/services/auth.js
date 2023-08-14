@@ -17,7 +17,7 @@ export const registerService = ({ phone, password, name }) => new Promise(async 
                 id: v4()
             }
         })
-        console.log(response);
+        // console.log(response);
         const token = response[1] && jwt.sign({ id: response[0].id, phone: response[0].phone }, process.env.SECRET_KEY, { expiresIn: '2d' })
         resolve({
             err: token ? 0 : 2,
@@ -40,6 +40,7 @@ export const loginService = ({ phone, password }) => new Promise(async (resolve,
         const token = isCorrectPassword && jwt.sign({ id: response.id, phone: response.phone }, process.env.SECRET_KEY, { expiresIn: '2d' })
         resolve({
             err: token ? 0 : 2,
+            data : token ?  {name : response.name, phone:response.phone} :  'no data',
             msg: token ? 'Login is successfully !' : response ? 'Password is wrong !' : 'Phone number not found !',
             token: token || null
         })

@@ -7,10 +7,15 @@ import EmptyLayout from '@/layouts/EmptyLayout/EmptyLayout';
 import { HeartOutlined, UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
 import { items } from '@/utils/Contants';
 import { Button } from 'antd';
+import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { RootState } from '@/app/store';
+import { setData, setIsLoggedIn } from '@/features/useSlice';
 
 const FixedTopHeader: React.FC = () => {
     const router = useRouter();
-
+    const dispatch = useAppDispatch();
+    const isLoggedIn = useAppSelector<boolean>((state: RootState) => state.user.isLoggedIn);
+    const data = useAppSelector<{name : string, phone : string}>((state: RootState) => state.user.data);
     const [scrollY, setScrollY] = useState<number>(0);
     useEffect(() => {
         const handleScroll = () => {
@@ -22,6 +27,13 @@ const FixedTopHeader: React.FC = () => {
         };
     }, []);
 
+    const handleLogout = () => {
+        dispatch(setData({ name: '', phone: '' }));
+        dispatch(setIsLoggedIn(false));
+    }
+
+    // console.log(isLoggedIn);
+
     return (
         <div className="">
             <EmptyLayout>
@@ -30,14 +42,18 @@ const FixedTopHeader: React.FC = () => {
                         <Image src={logo} alt="Picture of the author" />
                     </Link>
                     <div className="flex gap-4 justify-center items-center">
-                        {/* <Button
-                            onClick={() => router.push('/yeu-thich')}
+                        
+                        {isLoggedIn ? <>{data?.name}
+                            <Button
+                            onClick={() => handleLogout()}
                             className="flex justify-center items-center bg-main h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                         >
-                            <HeartOutlined style={{ fontSize: '22px' }} />
-                            Yêu Thích
-                        </Button> */}
-                        <Button
+                                {/* <UserAddOutlined style={{ fontSize: '22px' }} /> */}
+                                Đăng Xuất
+                        </Button>
+                        </> : <>
+
+                            <Button
                             onClick={() => router.push('/auth/login')}
                             className="flex justify-center items-center bg-main h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                         >
@@ -49,6 +65,7 @@ const FixedTopHeader: React.FC = () => {
                         >
                             <LogoutOutlined style={{ fontSize: '22px' }} /> Đăng Ký
                         </Button>
+                        </>}
                         <Button
                             onClick={() => router.push('/dang-tin-moi')}
                             className="flex justify-center items-center bg-[#f73859] h-10 text-white text-lg px-5 py-3 hover:opacity-90"
