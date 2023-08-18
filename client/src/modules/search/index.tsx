@@ -12,6 +12,14 @@ const Search = () => {
                 <SearchItem
                     IconBefore={<HiOutlineLocationMarker />}
                     IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
+                    defaultText={'Phòng trọ, Nhà trọ'}
+                    fontWeight  
+                />
+            </span>
+            <span className="cursor-pointer flex-2">
+                <SearchItem
+                    IconBefore={<HiOutlineLocationMarker />}
+                    IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
                     defaultText={'Toàn quốc'}
                 />
             </span>

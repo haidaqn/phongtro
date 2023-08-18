@@ -10,7 +10,7 @@ import icon_zalo from '@/assets/icons/icon_zalo.svg';
 const FooterPanner = () => {
     return (
         <div className="flex justify-between w-full gap-10">
-            <div className="flex-2 flex flex-col gap-2">
+            <div className="flex-1 flex flex-col gap-2">
                 <Link href="/" className="mb-4">
                     <Image src={logo} alt="Picture of the author" />
                 </Link>

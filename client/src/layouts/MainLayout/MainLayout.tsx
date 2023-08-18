@@ -17,8 +17,10 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
                 <Content style={{ marginTop: '10px', marginLeft: '10%', marginRight: '10%', overflow: 'hidden' }}>
                     <Search />
                     <h1 className="text-2xl font-bold">Kênh thông tin Phòng Trọ số 1 Việt Nam</h1>
-                    <div className="flex gap-5 h-[300px] mt-3">
-                        <div className='flex-3 rounded-lg border-[1px] bg-white'>
+                    <Breadcrumbs/>
+                    <div className="flex gap-5 mt-3">
+                        <div className='flex-3 rounded-md border-[1px] py-2 px-5 bg-white'>
+                            <h1 className='text-xl font-bold my-2'>Danh sách tin đăng</h1>
                             {children}
                         </div>
                         <div className='flex-1'><SlideBar/></div>

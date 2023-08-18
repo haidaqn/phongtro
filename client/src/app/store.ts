@@ -5,24 +5,18 @@ import thunk from 'redux-thunk';
 import { ThunkAction } from 'redux-thunk';
 import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/lib/persistReducer';
-import userReducer, { user } from '@/features/useSlice';
+import rootReducer from './rootReducer';
+
 
 const persistConfig = {
-    key: 'root',
-    storage: storage,
-    stateReconciler: autoMergeLevel2,
+  key: 'root', 
+  storage,
+   whitelist: ['user','post'],
 };
-
-const userPersistConfig = {
-    ...persistConfig,
-    key: 'root',
-    whitelist: ['isLoggedIn','data'],
-};
+const persistedReducer = persistReducer(persistConfig, rootReducer); 
 
 export const store = configureStore({
-    reducer: {
-        user: persistReducer<user>(userPersistConfig, userReducer),
-    },
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {

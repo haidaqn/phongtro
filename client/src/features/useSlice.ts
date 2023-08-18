@@ -17,7 +17,7 @@ let initialState: user = {
 };
 
 export const UserSlice = createSlice({
-    name: 'User',
+    name: 'user',
     initialState,
     reducers: {
         setIsLoggedIn: (state: user, action: PayloadAction<boolean>) => {
