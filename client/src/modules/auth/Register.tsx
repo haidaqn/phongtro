@@ -24,14 +24,14 @@ const validationSchema = yup.object().shape({
 const RegisterModule = () => {
     const formik = useFormik({
         initialValues: {
-            name : '',
+            name: '',
             phone: '',
             password: '',
             confirmPassword: '',
         },
         validationSchema: validationSchema,
-        onSubmit: async(values) => {
-            const {confirmPassword, ...data } = values;
+        onSubmit: async (values) => {
+            const { confirmPassword, ...data } = values;
             const response = await authApi.register(data);
             console.log(response);
         },

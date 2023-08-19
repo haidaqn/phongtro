@@ -1,13 +1,13 @@
 import React from 'react';
 import MainLayout from '@/layouts/MainLayout/MainLayout';
-import AuthLayout from '@/layouts/AuthLayout/AuthLayout'
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import { Form, Input, Button } from 'antd';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import authApi from '@/apiClient/auth';
 import { useAppDispatch } from '@/app/hooks';
-import { setIsLoggedIn , setData} from '@/features/useSlice';
+import { setIsLoggedIn, setData } from '@/features/User/useSlice';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -22,8 +22,8 @@ interface dataResponse {
     msg: string;
     token: string;
     data: {
-        name: string,
-        phone :string,
+        name: string;
+        phone: string;
     };
 }
 
@@ -36,7 +36,7 @@ const LoginModule = () => {
             password: '',
         },
         validationSchema: validationSchema,
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
             const response: unknown = await authApi.login(values);
             const responseCover: dataResponse = response as dataResponse;
             // console.log(response);

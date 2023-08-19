@@ -23,7 +23,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
     if (role != 2003) {
         return res.status(401).json({
             success: false,
-            message: 'No admin ..'
+            message: 'No admin ..',
         });
     }
     next();
@@ -33,5 +33,5 @@ const isAdmin = asyncHandler(async (req, res, next) => {
 
 module.exports = {
     verifyAccessToken,
-    isAdmin
+    isAdmin,
 };

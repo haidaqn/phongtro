@@ -5,59 +5,38 @@ import * as actions from './postAction';
 export interface post {
     posts: Post[];
     isLoading: boolean;
+    count: number;
 }
 
-
-const initialData = {
-    id: '',
-    title: '',
-    star: '',
-    address: '',
-    description:[],
-    images: {
-        image: [],
-    },
-    attributes: {
-        price: '',
-        acreage: '',
-        published: '',
-        hashtag: '',
-    },
-    user: {
-        name: '',
-        zalo: '',
-        phone: '',
-    },
-};
-
 let initialState: post = {
-    posts: [initialData],
+    posts: [],
     isLoading: false,
+    count: 0,
 };
 
 export const PostSlice = createSlice({
     name: 'post',
     initialState,
     reducers: {
-        setData: (state: post, action: PayloadAction<Post[]>) => {
-            return { ...state, data: action.payload };
-        }
     },
     extraReducers: (builder)=> {
-        builder.addCase(actions.getPosts.pending, (state) => {
-            state.isLoading = true;
+        // builder.addCase(actions.getPosts.fulfilled, (state, action) => {
+        //     state.posts = action.payload.rows;
+        //     state.count = action.payload.count;
+        // })
+        builder.addCase(actions.getPostLimit.fulfilled, (state, action) => {
+            state.posts = action.payload.rows;
+            state.count = action.payload.count;
         });
-        builder.addCase(actions.getPosts.fulfilled, (state, action) => {
-            // console.log(action);
-            state.posts = action.payload;
-            state.isLoading = false;
-        });
-        builder.addCase(actions.getPosts.rejected, (state, action) => {
-            state.isLoading = false;
-        });
+        // builder.addMatcher(
+        //     (action) => action.type === 'getPostLimit/fulfilled',
+        //     (state, action) => {
+        //         console.log(action.payload);
+        //     state.posts = action.payload;
+        // })
     }
 });
 
-export const { setData } = PostSlice.actions;
+export const {  } = PostSlice.actions;
 
 export default PostSlice.reducer;

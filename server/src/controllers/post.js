@@ -1,13 +1,26 @@
-import * as postService from "../services/post";
+import * as postService from '../services/post';
 
 export const getPosts = async (req, res) => {
-  try {
-    const response = await postService.getPostsService();
-    return res.status(200).json(response);
-  } catch (error) {
-    return res.status(500).json({
-      err: -1,
-      msg: "Failed to get posts" + error,
-    });
-  }
+    try {
+        const response = await postService.getPostsService();
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            err: -1,
+            msg: 'Failed to get posts' + error,
+        });
+    }
+};
+
+export const getPostLimit = async (req, res) => {
+    const { page } = req.query;
+    try {
+        const response = await postService.getPostLimitService(page);
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json({
+            err: -1,
+            msg: 'Failed to get posts limit' + error,
+        });
+    }
 };

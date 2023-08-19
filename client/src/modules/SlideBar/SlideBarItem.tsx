@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const SlideBarItem = () => {
-  return (
-    <div>SlideBarItem</div>
-  )
-}
+    return <div>SlideBarItem</div>;
+};
 
-export default SlideBarItem
+export default SlideBarItem;

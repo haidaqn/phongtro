@@ -3,9 +3,12 @@ import postsApi from '@/apiClient/post';
 import { Post } from '@/models/Post';
 
 interface responseData {
-    err:number,
-    data: Post[],
-    msg: string,
+    err: number;
+    data: {
+        rows: Post[],
+        count : number
+    };
+    msg: string;
 }
 
 export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithValue }) => {
@@ -15,3 +18,10 @@ export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithVa
     if (responseCover?.err) return rejectWithValue(responseCover);
     return responseCover.data;
 });
+
+export const getPostLimit = createAsyncThunk('app/post', async (data:number, {rejectWithValue}) => {
+    const response:unknown = await postsApi.getLimit(data);
+    const responseCover: responseData = response as responseData;
+    if (responseCover?.err) return rejectWithValue(responseCover);
+    return responseCover.data;
+})

@@ -1,5 +1,4 @@
 import React from 'react';
-import EmptyLayout from '@/layouts/EmptyLayout/EmptyLayout';
 import SearchItem from '@/components/Common/SearchItem';
 import icons from '../../utils/Icons';
 
@@ -13,7 +12,7 @@ const Search = () => {
                     IconBefore={<HiOutlineLocationMarker />}
                     IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
                     defaultText={'Phòng trọ, Nhà trọ'}
-                    fontWeight  
+                    fontWeight
                 />
             </span>
             <span className="cursor-pointer flex-2">

@@ -27,5 +27,5 @@ export const items: MenuItem[] = [
     {
         label: 'Tìm người ở ghép',
         key: '/tim-nguoi-o-ghep',
-    }
+    },
 ];

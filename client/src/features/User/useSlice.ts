@@ -8,7 +8,7 @@ export interface user {
 
 const initialData = {
     name: '',
-    phone:'',
+    phone: '',
 };
 
 let initialState: user = {
@@ -25,7 +25,7 @@ export const UserSlice = createSlice({
         },
         setData: (state: user, action: PayloadAction<User>) => {
             return { ...state, data: action.payload };
-        }
+        },
     },
 });
 

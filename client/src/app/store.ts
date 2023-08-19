@@ -7,13 +7,12 @@ import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 
 import persistReducer from 'redux-persist/lib/persistReducer';
 import rootReducer from './rootReducer';
 
-
 const persistConfig = {
-  key: 'root', 
-  storage,
-   whitelist: ['user','post'],
+    key: 'root',
+    storage,
+    whitelist: ['user', 'post'],
 };
-const persistedReducer = persistReducer(persistConfig, rootReducer); 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,

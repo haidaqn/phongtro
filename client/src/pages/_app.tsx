@@ -7,9 +7,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persisitor, store } from '@/app/store';
 import { AppProps } from 'next/app';
 
-
 function MyApp({ Component, pageProps }: AppProps) {
-
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persisitor}>
