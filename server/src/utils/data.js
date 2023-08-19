@@ -1,5 +1,5 @@
 import generateCode from './generateCode';
-export const prices = [
+const prices = [
     {
         min: 0,
         max: 1,
@@ -42,7 +42,7 @@ export const prices = [
     },
 ];
 
-export const areas = [
+const areas = [
     {
         min: 0,
         max: 20,
