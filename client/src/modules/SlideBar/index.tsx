@@ -1,14 +1,20 @@
 import * as React from 'react';
+import SlideBarItem from './Components/SlideBarItem';
+import { Category } from '@/models';
 
-const SlideBar = () => {
+export interface propsData{
+    category : Category[]
+}
+
+const SlideBar = (props: propsData) => {
+
+    const { category } = props;
+
     return (
-        <div className="flex gap-5 flex-col">
-            <div className="bg-white rounded-md p-2 border-[1px]">
-                <h1>Xem theo giá</h1>
-            </div>
-            <div className="bg-white rounded-md p-2 border-[1px]">
-                <h1>Xem theo diện tích</h1>
-            </div>
+        <div className="flex gap-5 flex-col justify-start">
+            <SlideBarItem title='danh mục cho thuê' content={category}/>
+            <SlideBarItem title='xem theo giá'/>
+            <SlideBarItem title='xem theo diện tích'/>
         </div>
     );
 };

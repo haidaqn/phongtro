@@ -1,18 +1,29 @@
+import * as React from 'react';
 import { LayoutProps } from '@/models/common';
 import CustomHeader from '@/modules/main/header/Header';
 import Footer from '@/modules/main/footer/Footer';
-import Search from '@/modules/search';
+import Search from '@/modules/Search';
 import { Layout } from 'antd';
 import SlideBar from '@/modules/SlideBar';
-// import Breadcrumb from 'antd';
 import Breadcrumbs from '@/modules/Breadcrumbs';
+import { useAppDispatch,useAppSelector } from '@/app/hooks';
+import { getCategories } from '@/features/Category/categoryActions';
 
 const { Content } = Layout;
 
 const MainLayout = ({ children }: LayoutProps): JSX.Element => {
+
+    const dispatch = useAppDispatch();
+    
+    React.useEffect(() => { 
+        dispatch(getCategories());
+    }, []);
+
+    const { category } = useAppSelector(state => state.category);
+
     return (
         <Layout style={{ width: 'full' }}>
-            <CustomHeader />
+            <CustomHeader category={category} />
             <Layout>
                 <Content style={{ marginTop: '10px', marginLeft: '10%', marginRight: '10%', overflow: 'hidden' }}>
                     <Search />
@@ -23,8 +34,8 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
                             <h1 className="text-xl font-bold my-2">Danh sách tin đăng</h1>
                             {children}
                         </div>
-                        <div className="flex-1">
-                            <SlideBar />
+                        <div className="flex-1 items-center justify-center">
+                            <SlideBar category={category}/>
                         </div>
                     </div>
                 </Content>

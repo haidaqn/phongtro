@@ -21,7 +21,7 @@ const ListPosts = (props: propsData) => {
             <div className="flex flex-col gap-3 mt-2">
                 {posts?.map((item, index) => <PostItem data={item} key={index} />)}
             </div>
-            <div className="flex justify-center items-center w-full border py-2 gap-5">
+            <div className="flex justify-center items-center w-full py-2 gap-5">
                 <Pagination total={count} pageSize={4} currentPage={page} page={page} setPage={setPage} />
             </div>
         </div>

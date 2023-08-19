@@ -10,8 +10,16 @@ import { Button } from 'antd';
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { RootState } from '@/app/store';
 import { setData, setIsLoggedIn } from '@/features/User/useSlice';
+import { Category } from '@/models';
 
-const FixedTopHeader: React.FC = () => {
+export interface propsData {
+    category : Category[]
+}
+
+const FixedTopHeader = (props: propsData) => {
+
+    const { category } = props;
+
     const router = useRouter();
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector<boolean>((state: RootState) => state.user.isLoggedIn);
@@ -32,7 +40,7 @@ const FixedTopHeader: React.FC = () => {
         dispatch(setIsLoggedIn(false));
     };
 
-    // console.log(isLoggedIn);
+    // console.log(router.pathname);
 
     return (
         <div className="">
@@ -80,14 +88,21 @@ const FixedTopHeader: React.FC = () => {
             </EmptyLayout>
             <div className={`bg-blue-600 w-full h-[40px] z-50 ${scrollY >= 60 && 'fixed top-0 right-0 left-0'}}`}>
                 <div className="flex items-center h-full text-white text-base font-medium ml-[10%]">
-                    {items.map((item) => (
-                        <Link
-                            key={item.key}
-                            href={item.key}
-                            className={`${router.pathname === item.key ? 'bg-red-500' : 'hover:bg-red-500'}
+                    <Link
+                            href={'/'}
+                            className={`${router.pathname === '/' ? 'bg-red-500' : 'hover:bg-red-500'}
                 h-full flex justify-center items-center px-3 py-1`}
                         >
-                            {item.label}
+                            Trang Chủ
+                    </Link>
+                    {category.map((item) => (
+                        <Link
+                            key={item.code}
+                            href={item.code}
+                            className={`${router.pathname === `/${item.code}` ? 'bg-red-500' : 'hover:bg-red-500'}
+                h-full flex justify-center items-center px-3 py-1`}
+                        >
+                            {item.value}
                         </Link>
                     ))}
                 </div>

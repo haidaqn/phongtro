@@ -23,9 +23,5 @@ export const items: MenuItem[] = [
     {
         label: 'Cho thuê mặt bằng',
         key: '/cho-thue-mat-bang',
-    },
-    {
-        label: 'Tìm người ở ghép',
-        key: '/tim-nguoi-o-ghep',
-    },
+    }
 ];
