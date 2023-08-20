@@ -16,6 +16,8 @@ const ListPosts = (props: propsData) => {
     }, [page]);
     const posts: Post[] = useAppSelector((state: RootState) => state.post.posts);
     const count: number = useAppSelector((state: RootState) => state.post.count);
+
+    // console.log(posts)
     return (
         <div className='w-full'>
             <div className="flex flex-col gap-3 mt-2">

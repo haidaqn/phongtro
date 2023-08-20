@@ -1,17 +1,18 @@
 import db from '../models';
 require('dotenv').config();
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, v1, v4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import generateCode from '../utils/generateCode';
-// import chothuecanho from "../../data/chothuecanho.json";
-import chothuematbang from '../../data/chothuematbang.json';
-import nhachothue from '../../data/nhachothue.json';
-import chothuephongtro from '../../data/chothuephongtro.json';
+
+import chothuecanho from '../../data/chothuecanho.json';
+// import chothuematbang from '../../data/chothuematbang.json';
+// import nhachothue from '../../data/nhachothue.json';
+// import chothuephongtro from '../../data/chothuephongtro.json';
 import { dataArea, dataPrice } from '../utils/data';
 import { getNumberFromString } from '../utils/common';
 
 const hashPassword = (password) => bcrypt.hashSync(password, bcrypt.genSaltSync(12));
-const dataBody = chothuephongtro.body;
+const dataBody = chothuecanho.body;
 
 export const insertService = () =>
     new Promise((resolve, reject) => {
@@ -32,7 +33,7 @@ export const insertService = () =>
                     star: item?.headerData?.star,
                     labelCode,
                     attributesId,
-                    categoryCode: 'CTPT',
+                    categoryCode: 'CTCH',
                     description: JSON.stringify(item?.mainContent?.content),
                     userId,
                     overviewId,
@@ -103,3 +104,26 @@ export const createUserService = () => {
         }
     });
 };
+
+export const createPricesAndArea = () =>
+    new Promise((resolve, reject) => {
+        try {
+            dataPrice.forEach(async (item) => {
+                await db.Price.create({
+                    id: uuidv4(),
+                    code: item.code,
+                    value: item.value,
+                });
+            });
+            dataArea.forEach(async (item) => {
+                await db.Area.create({
+                    id: uuidv4(),
+                    code: item.code,
+                    value: item.value,
+                });
+            });
+            resolve('ok');
+        } catch (error) {
+            reject(error);
+        }
+    });

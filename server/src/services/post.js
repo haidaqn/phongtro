@@ -49,7 +49,7 @@ export const getPostLimitService = (offset) =>
                     {
                         model: db.User,
                         as: 'user',
-                        attributes: ['name', 'zalo', 'phone'],
+                        attributes: ['name', 'phone'],
                     },
                 ],
                 attributes: ['id', 'title', 'star', 'address', 'description'],

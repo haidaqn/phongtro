@@ -11,7 +11,7 @@ const { AiOutlineRight } = icons;
 
 const SlideBarItem = (props : propsData) => {
     const { title, content } = props;
-    console.log(content);
+    // console.log(content);
     
     return <div className='bg-white rounded-md px-2 py-3 border-[1px] capitalize'>
         <h1 className='text-lg font-medium capitalize'>{title}</h1>
