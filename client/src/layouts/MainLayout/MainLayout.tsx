@@ -6,20 +6,21 @@ import Search from '@/modules/Search';
 import { Layout } from 'antd';
 import SlideBar from '@/modules/SlideBar';
 import Breadcrumbs from '@/modules/Breadcrumbs';
-import { useAppDispatch,useAppSelector } from '@/app/hooks';
-import { getCategories } from '@/features/Category/categoryActions';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { getCategories, getPrice, getArea } from '@/features/Category/categoryActions';
 
 const { Content } = Layout;
 
 const MainLayout = ({ children }: LayoutProps): JSX.Element => {
-
     const dispatch = useAppDispatch();
-    
-    React.useEffect(() => { 
+
+    React.useEffect(() => {
         dispatch(getCategories());
+        dispatch(getPrice());
+        dispatch(getArea());
     }, []);
 
-    const { category } = useAppSelector(state => state.category);
+    const { category, area, price } = useAppSelector((state) => state.category);
 
     return (
         <Layout style={{ width: 'full' }}>
@@ -35,7 +36,7 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
                             {children}
                         </div>
                         <div className="flex-1 items-center justify-center">
-                            <SlideBar category={category}/>
+                            <SlideBar category={category} price={price} area={area} />
                         </div>
                     </div>
                 </Content>

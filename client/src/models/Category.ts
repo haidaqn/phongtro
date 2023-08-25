@@ -4,4 +4,11 @@ export interface Category {
     value: string;
     header?: string;
     subheader?: string;
+    order?: string;
+}
+
+export interface PriceAndArea {
+    code: string;
+    value: string;
+    order: string;
 }

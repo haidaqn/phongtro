@@ -10,8 +10,6 @@ const PostItem = (props: propsData) => {
     const img = JSON.parse(data.images.image);
     const description = JSON.parse(data.description);
 
-  
-
     return (
         <div className="border-t-[1px] py-4 flex gap-3">
             <img
@@ -41,9 +39,11 @@ const PostItem = (props: propsData) => {
                         <span className="text-lg font-medium">{data.user.name}</span>
                     </div>
                     <div className="flex items-center justify-center gap-3 text-lg">
-                        <span className=" font-medium cursor-pointer bg-main py-1 px-2 rounded-sm text-white">
-                            {data.user.phone}
-                        </span>
+                        {data.user.phone && (
+                            <span className=" font-medium cursor-pointer bg-main py-1 px-2 rounded-sm text-white">
+                                {data.user.phone}
+                            </span>
+                        )}
                         <span className="font-medium cursor-pointer bg-white py-1 px-2 rounded-sm text-main border-main border">
                             Nhắn tin zalo
                         </span>
