@@ -1,13 +1,20 @@
 import axiosClient from './axiosClient';
 
+interface data {
+    query: {};
+}
+
 const postsApi = {
     getAll() {
         const url = 'post/all-post';
         return axiosClient.get(url);
     },
-    getLimit(page: number) {
-        const url = `post/limit?page=${page}`;
-        return axiosClient.get(url);
+    getLimit(data: data) {
+        return axiosClient({
+            method: 'get',
+            url: `post/limit`,
+            params: data.query,
+        });
     },
 };
 

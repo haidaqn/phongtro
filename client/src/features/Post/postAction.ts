@@ -5,10 +5,16 @@ import { Post } from '@/models/Post';
 interface responseData {
     err: number;
     data: {
-        rows: Post[],
-        count : number
+        rows: Post[];
+        count: number;
     };
     msg: string;
+}
+
+interface data {
+    query: {
+        page: number;
+    };
 }
 
 export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithValue }) => {
@@ -19,9 +25,10 @@ export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithVa
     return responseCover.data;
 });
 
-export const getPostLimit = createAsyncThunk('app/post', async (data:number, {rejectWithValue}) => {
-    const response:unknown = await postsApi.getLimit(data);
+export const getPostLimit = createAsyncThunk('app/post', async (data: data, { rejectWithValue }) => {
+    const { page, ...dk } = data.query;
+    const response: unknown = await postsApi.getLimit(data);
     const responseCover: responseData = response as responseData;
     if (responseCover?.err) return rejectWithValue(responseCover);
-    return responseCover.data;
-})
+    return { ...responseCover.data, type: dk };
+});

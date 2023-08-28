@@ -13,9 +13,9 @@ const SlideBar = (props: propsData) => {
 
     return (
         <div className="flex gap-5 flex-col justify-start">
-            <SlideBarItem title="danh mục cho thuê" content={category} isDouble={false} />
-            <SlideBarItem title="xem theo giá" content={price} isDouble={true} />
-            <SlideBarItem title="xem theo diện tích" content={area} isDouble={true} />
+            <SlideBarItem title="danh mục cho thuê" type="" content={category} isDouble={false} />
+            <SlideBarItem title="xem theo giá" type="priceCode" content={price} isDouble={true} />
+            <SlideBarItem title="xem theo diện tích" type="areaCode" content={area} isDouble={true} />
         </div>
     );
 };

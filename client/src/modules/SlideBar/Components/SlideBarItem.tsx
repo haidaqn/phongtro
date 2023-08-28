@@ -1,17 +1,32 @@
 import * as React from 'react';
 import icons from '@/utils/Icons';
 import { Category, PriceAndArea } from '@/models';
-
+import Link from 'next/link';
+import { useAppDispatch } from '@/app/hooks';
+import * as actions from '@/features/Post/postAction';
 export interface propsData {
     title: string;
     content?: Category[] | PriceAndArea[];
     isDouble: boolean;
+    type: string | '';
 }
 
 const { AiOutlineRight } = icons;
 
 const SlideBarItem = (props: propsData) => {
-    const { title, content, isDouble } = props;
+    const { title, content, isDouble, type } = props;
+    const dispatch = useAppDispatch();
+
+    const handle = (code: string): void => {
+        dispatch(
+            actions.getPostLimit({
+                query: {
+                    page: 0,
+                    [type]: code,
+                },
+            }),
+        );
+    };
 
     return (
         <div className="bg-white rounded-md px-2 py-3 border-[1px] capitalize">
@@ -21,6 +36,7 @@ const SlideBarItem = (props: propsData) => {
                     <div className="grid grid-cols-2 gap-1">
                         {content?.map((item) => (
                             <div
+                                onClick={() => handle(item.code)}
                                 key={item.code}
                                 className="pl-3 flex gap-1 items-center text-[14px] border-b pb-2 border-dashed cursor-pointer hover:text-orange-500"
                             >
@@ -33,6 +49,7 @@ const SlideBarItem = (props: propsData) => {
                     <>
                         {content?.map((item) => (
                             <div
+                                // onClick={() => handle(item.code)}
                                 key={item.code}
                                 className="pl-3 flex gap-1 items-center text-[14px] border-b pb-2 border-dashed cursor-pointer hover:text-orange-500"
                             >

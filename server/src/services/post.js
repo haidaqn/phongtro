@@ -31,10 +31,11 @@ export const getPostsService = () =>
         }
     });
 //
-export const getPostLimitService = (offset) =>
+export const getPostLimitService = (offset, query) =>
     new Promise(async (resolve, reject) => {
         try {
             const response = await db.Post.findAndCountAll({
+                where: query,
                 raw: true,
                 nest: true,
                 offset: offset * +process.env.LIMIT || 0,
