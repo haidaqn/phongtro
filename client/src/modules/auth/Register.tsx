@@ -33,7 +33,7 @@ const RegisterModule = () => {
         onSubmit: async (values) => {
             const { confirmPassword, ...data } = values;
             const response = await authApi.register(data);
-            console.log(response);
+            // console.log(response);
         },
     });
 

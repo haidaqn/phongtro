@@ -14,6 +14,7 @@ interface responseData {
 interface data {
     query: {
         page: number;
+        categoryCode: string | null;
     };
 }
 
@@ -26,7 +27,8 @@ export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithVa
 });
 
 export const getPostLimit = createAsyncThunk('app/post', async (data: data, { rejectWithValue }) => {
-    const { page, ...dk } = data.query;
+    const { page, categoryCode, ...dk } = data.query;
+    console.log(categoryCode);
     const response: unknown = await postsApi.getLimit(data);
     const responseCover: responseData = response as responseData;
     if (responseCover?.err) return rejectWithValue(responseCover);

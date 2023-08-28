@@ -5,10 +5,13 @@ import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { RootState } from '@/app/store';
 import { getPostLimit } from '@/features/Post/postAction';
 import Pagination from '@/components/Common/Pagination';
+import { useRouter } from 'next/router';
 
 interface propsData {}
 
 const ListPosts = (props: propsData) => {
+    const router = useRouter();
+    const routerName = router.query.type && router.query.type[0];
     const dispatch = useAppDispatch();
     const [pageCurrent, setPageCurrent] = React.useState<number>(1);
     const posts: Post[] = useAppSelector((state: RootState) => state.post.posts);
@@ -19,6 +22,7 @@ const ListPosts = (props: propsData) => {
             getPostLimit({
                 query: {
                     page: pageCurrent - 1,
+                    categoryCode: routerName || '',
                     ...type,
                 },
             }),

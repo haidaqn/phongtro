@@ -11,16 +11,16 @@ import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import { RootState } from '@/app/store';
 import { setData, setIsLoggedIn } from '@/features/User/useSlice';
 import { Category } from '@/models';
-
+import * as actions from '@/features/Post/postAction';
 export interface propsData {
-    category : Category[]
+    category: Category[];
 }
 
 const FixedTopHeader = (props: propsData) => {
-
     const { category } = props;
 
     const router = useRouter();
+    const currentType = router.query.type && router.query.type[0];
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector<boolean>((state: RootState) => state.user.isLoggedIn);
     const data = useAppSelector<{ name: string; phone: string }>((state: RootState) => state.user.data);
@@ -40,7 +40,18 @@ const FixedTopHeader = (props: propsData) => {
         dispatch(setIsLoggedIn(false));
     };
 
-    // console.log(router.pathname);
+    const handle = (code: string): void => {
+        dispatch(
+            actions.getPostLimit({
+                query: {
+                    page: 0,
+                    categoryCode: code,
+                },
+            }),
+        );
+    };
+
+    // console.log(currentType);
 
     return (
         <div className="">
@@ -89,17 +100,18 @@ const FixedTopHeader = (props: propsData) => {
             <div className={`bg-blue-600 w-full h-[40px] z-50 ${scrollY >= 60 && 'fixed top-0 right-0 left-0'}}`}>
                 <div className="flex items-center h-full text-white text-base font-medium ml-[10%]">
                     <Link
-                            href={'/'}
-                            className={`${router.pathname === '/' ? 'bg-red-500' : 'hover:bg-red-500'}
+                        href={'/'}
+                        className={`${router.pathname === '/' ? 'bg-red-500' : 'hover:bg-red-500'}
                 h-full flex justify-center items-center px-3 py-1`}
-                        >
-                            Trang Chủ
+                    >
+                        Trang Chủ
                     </Link>
                     {category.map((item) => (
                         <Link
+                            onClick={() => handle(item.code)}
                             key={item.code}
                             href={item.code}
-                            className={`${router.pathname === `/${item.code}` ? 'bg-red-500' : 'hover:bg-red-500'}
+                            className={`${currentType === `${item.code}` ? 'bg-red-500' : 'hover:bg-red-500'}
                 h-full flex justify-center items-center px-3 py-1`}
                         >
                             {item.value}

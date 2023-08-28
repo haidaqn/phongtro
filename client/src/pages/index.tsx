@@ -5,7 +5,6 @@ import ListPosts from '@/modules/ListPosts';
 interface HomeProps {}
 
 function Home(props: HomeProps) {
-
     return (
         <MainLayout>
             <ListPosts />

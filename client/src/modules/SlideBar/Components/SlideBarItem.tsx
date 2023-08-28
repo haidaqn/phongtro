@@ -4,6 +4,8 @@ import { Category, PriceAndArea } from '@/models';
 import Link from 'next/link';
 import { useAppDispatch } from '@/app/hooks';
 import * as actions from '@/features/Post/postAction';
+import { useRouter } from 'next/router';
+
 export interface propsData {
     title: string;
     content?: Category[] | PriceAndArea[];
@@ -16,12 +18,15 @@ const { AiOutlineRight } = icons;
 const SlideBarItem = (props: propsData) => {
     const { title, content, isDouble, type } = props;
     const dispatch = useAppDispatch();
+    const router = useRouter();
+    const routerName = router.query.type && router.query.type[0];
 
     const handle = (code: string): void => {
         dispatch(
             actions.getPostLimit({
                 query: {
                     page: 0,
+                    categoryCode: routerName || '',
                     [type]: code,
                 },
             }),
@@ -48,14 +53,15 @@ const SlideBarItem = (props: propsData) => {
                 ) : (
                     <>
                         {content?.map((item) => (
-                            <div
-                                // onClick={() => handle(item.code)}
+                            <Link
+                                href={`${item.code}`}
+                                onClick={() => handle(item.code)}
                                 key={item.code}
                                 className="pl-3 flex gap-1 items-center text-[14px] border-b pb-2 border-dashed cursor-pointer hover:text-orange-500"
                             >
                                 <AiOutlineRight size={15} color="#ccc" />
                                 <span className="">{item.value}</span>
-                            </div>
+                            </Link>
                         ))}
                     </>
                 )}
