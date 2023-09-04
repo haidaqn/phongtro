@@ -19,7 +19,11 @@ let initialState: post = {
 export const PostSlice = createSlice({
     name: 'post',
     initialState,
-    reducers: {},
+    reducers: {
+        setType(state, action) {
+            state.count = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(actions.getPostLimit.fulfilled, (state, action) => {
             state.posts = action.payload.rows;
@@ -29,6 +33,6 @@ export const PostSlice = createSlice({
     },
 });
 
-export const {} = PostSlice.actions;
+export const { setType } = PostSlice.actions;
 
 export default PostSlice.reducer;

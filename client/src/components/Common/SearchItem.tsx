@@ -1,4 +1,8 @@
 import React, { ReactNode, memo } from 'react';
+import { Card, Space, Typography } from 'antd';
+import { FontColorsOutlined } from '@ant-design/icons';
+
+const { Text } = Typography;
 
 interface SearchItemProps {
     IconBefore?: ReactNode;
@@ -10,19 +14,18 @@ interface SearchItemProps {
 
 const SearchItem = ({ IconBefore, IconAfter, text, fontWeight, defaultText }: SearchItemProps) => {
     return (
-        <div className="bg-white py-2 px-4 w-full rounded-md text-gray-400 text-[13.3px] flex items-center justify-between">
-            <div className="flex items-center gap-1 w-full">
+        <Card className="bg-white w-full" bodyStyle={{ padding: '8px 16px', display: 'flex', alignItems: 'center' }}>
+            <Space align="center" style={{ width: '100%' }}>
                 {IconBefore}
-                <span
-                    className={`${fontWeight ? 'font-medium text-black' : ''} w-[100px] ${
-                        text ? 'font-medium text-black' : ''
-                    } overflow-hidden text-ellipsis whitespace-nowrap`}
+                <Text
+                    strong={fontWeight || !!text}
+                    style={{ width: '100px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
                 >
                     {text || defaultText}
-                </span>
-            </div>
-            {IconAfter}
-        </div>
+                </Text>
+            </Space>
+            <Text>{IconAfter}</Text>
+        </Card>
     );
 };
 

@@ -4,9 +4,6 @@ import ListPosts from '@/modules/ListPosts';
 import { useRouter } from 'next/router';
 
 const TypeCategory = () => {
-    const router = useRouter();
-    const routerName = router.query.type && router.query.type[0];
-
     return (
         <MainLayout>
             <ListPosts />

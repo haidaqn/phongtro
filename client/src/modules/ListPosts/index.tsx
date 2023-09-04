@@ -6,6 +6,7 @@ import { RootState } from '@/app/store';
 import { getPostLimit } from '@/features/Post/postAction';
 import Pagination from '@/components/Common/Pagination';
 import { useRouter } from 'next/router';
+import { setType } from '@/features/Post/postSlice';
 
 interface propsData {}
 
@@ -13,7 +14,7 @@ const ListPosts = (props: propsData) => {
     const router = useRouter();
     const routerName = router.query.type && router.query.type[0];
     const dispatch = useAppDispatch();
-    const [pageCurrent, setPageCurrent] = React.useState<number>(1);
+    const [page, setPage] = React.useState<number>(1);
     const posts: Post[] = useAppSelector((state: RootState) => state.post.posts);
     const count: number = useAppSelector((state: RootState) => state.post.count);
     const type: {} = useAppSelector((state: RootState) => state.post.type);
@@ -21,13 +22,13 @@ const ListPosts = (props: propsData) => {
         dispatch(
             getPostLimit({
                 query: {
-                    page: pageCurrent - 1,
-                    categoryCode: routerName || '',
+                    page: page - 1,
+                    categoryCode: routerName,
                     ...type,
                 },
             }),
         );
-    }, [pageCurrent]);
+    }, [page]);
 
     return (
         <div className="w-full">
@@ -35,13 +36,7 @@ const ListPosts = (props: propsData) => {
                 {posts?.map((item, index) => <PostItem data={item} key={index} />)}
             </div>
             <div className="flex justify-center items-center w-full py-2 gap-5">
-                <Pagination
-                    total={count}
-                    pageSize={4}
-                    currentPage={pageCurrent}
-                    page={pageCurrent}
-                    setPage={setPageCurrent}
-                />
+                <Pagination total={count} pageSize={4} currentPage={page} page={page} setPage={setPage} />
             </div>
         </div>
     );
