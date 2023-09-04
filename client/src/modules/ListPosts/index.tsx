@@ -12,23 +12,63 @@ interface propsData {}
 
 const ListPosts = (props: propsData) => {
     const router = useRouter();
-    const routerName = router.query.type && router.query.type[0];
+    const routerName = Array.isArray(router.query.type) ? router.query.type[0] : null;
+    const routerPrice = Array.isArray(router.query.priceCode) ? router.query.priceCode[0] : null;
+    const routerArea = Array.isArray(router.query.areaCode) ? router.query.areaCode[0] : null;
     const dispatch = useAppDispatch();
     const [page, setPage] = React.useState<number>(1);
+
     const posts: Post[] = useAppSelector((state: RootState) => state.post.posts);
     const count: number = useAppSelector((state: RootState) => state.post.count);
-    const type: {} = useAppSelector((state: RootState) => state.post.type);
+    const priceCode: string | null = useAppSelector((state: RootState) => state.post.type.priceCode);
+    const areaCode: string | null = useAppSelector((state: RootState) => state.post.type.areaCode);
+
     React.useEffect(() => {
-        dispatch(
-            getPostLimit({
-                query: {
-                    page: page - 1,
-                    categoryCode: routerName,
-                    ...type,
-                },
-            }),
-        );
-    }, [page]);
+        if (priceCode && areaCode) {
+            dispatch(
+                getPostLimit({
+                    query: {
+                        page: page - 1,
+                        categoryCode: routerName,
+                        priceCode,
+                        areaCode,
+                    },
+                }),
+            );
+        } else if (!priceCode && !areaCode) {
+            dispatch(
+                getPostLimit({
+                    query: {
+                        page: page - 1,
+                        categoryCode: routerName,
+                    },
+                }),
+            );
+        } else {
+            if (priceCode && !areaCode) {
+                dispatch(
+                    getPostLimit({
+                        query: {
+                            page: page - 1,
+                            categoryCode: routerName,
+                            priceCode,
+                        },
+                    }),
+                );
+            }
+            if (!priceCode && areaCode) {
+                dispatch(
+                    getPostLimit({
+                        query: {
+                            page: page - 1,
+                            categoryCode: routerName,
+                            areaCode,
+                        },
+                    }),
+                );
+            }
+        }
+    }, [page, routerName, routerPrice, routerArea]);
 
     return (
         <div className="w-full">

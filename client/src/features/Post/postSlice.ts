@@ -6,14 +6,22 @@ export interface post {
     posts: Post[];
     isLoading: boolean;
     count: number;
-    type: {};
+    type: {
+        priceCode: string;
+        areaCode: string;
+        page: number;
+    };
 }
 
 let initialState: post = {
     posts: [],
     isLoading: false,
     count: 0,
-    type: {},
+    type: {
+        priceCode: '',
+        areaCode: '',
+        page: 0,
+    },
 };
 
 export const PostSlice = createSlice({
@@ -28,7 +36,9 @@ export const PostSlice = createSlice({
         builder.addCase(actions.getPostLimit.fulfilled, (state, action) => {
             state.posts = action.payload.rows;
             state.count = action.payload.count;
-            state.type = action.payload.type;
+            state.type.areaCode = action.payload.type.areaCode || '';
+            state.type.priceCode = action.payload.type.priceCode || '';
+            state.type.page = action.payload.type.page || 0;
         });
     },
 });

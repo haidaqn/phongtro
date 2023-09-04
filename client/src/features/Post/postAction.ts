@@ -14,7 +14,9 @@ interface responseData {
 interface data {
     query: {
         page: number;
-        categoryCode?: string;
+        categoryCode?: string | null;
+        priceCode?: string | null;
+        areaCode?: string | null;
     };
 }
 export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithValue }) => {
@@ -26,16 +28,16 @@ export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithVa
 
 export const getPostLimit = createAsyncThunk('app/post', async (data: data, { rejectWithValue }) => {
     const { categoryCode, ...query } = data.query;
-    const { page, ...dk } = query;
+    const { page, priceCode, areaCode } = query;
     if (categoryCode) {
         const response: unknown = await postsApi.getLimit(data);
         const responseCover: responseData = response as responseData;
         if (responseCover?.err) return rejectWithValue(responseCover);
-        return { ...responseCover.data, type: dk };
+        return { ...responseCover.data, type: query };
     } else {
         const response: unknown = await postsApi.getLimit({ query: { page } });
         const responseCover: responseData = response as responseData;
         if (responseCover?.err) return rejectWithValue(responseCover);
-        return { ...responseCover.data, type: dk };
+        return { ...responseCover.data, type: query };
     }
 });
