@@ -1,6 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
 import categoryApis from '@/apiClient/category';
 import { Category, PriceAndArea } from '@/models';
+import create from '@ant-design/icons/lib/components/IconFont';
 
 interface responseData {
     err: number;
@@ -31,6 +32,13 @@ export const getPrice = createAsyncThunk('app/price', async (data, { rejectWithV
 
 export const getArea = createAsyncThunk('app/area', async (data, { rejectWithValue }) => {
     const response: unknown = await categoryApis.getAllS();
+    const responseCover: responsePriceAndAreaData = response as responsePriceAndAreaData;
+    if (responseCover?.err) return rejectWithValue(responseCover);
+    return responseCover.response;
+});
+
+export const getProvinces = createAsyncThunk('', async (data, { rejectWithValue }) => {
+    const response: unknown = await categoryApis.getProvinces();
     const responseCover: responsePriceAndAreaData = response as responsePriceAndAreaData;
     if (responseCover?.err) return rejectWithValue(responseCover);
     return responseCover.response;

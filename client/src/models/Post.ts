@@ -16,6 +16,6 @@ export interface Post {
     user: {
         name: string;
         zalo?: string;
-        phone :string
+        phone: string;
     };
 }

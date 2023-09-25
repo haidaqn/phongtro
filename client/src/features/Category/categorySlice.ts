@@ -1,17 +1,19 @@
-import { Category, PriceAndArea } from '@/models';
+import { Category, PriceAndAreaAndProvince } from '@/models';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import * as actions from './categoryActions';
 
 export interface category {
     category: Category[];
-    price: PriceAndArea[];
-    area: PriceAndArea[];
+    price: PriceAndAreaAndProvince[];
+    area: PriceAndAreaAndProvince[];
+    provinces: PriceAndAreaAndProvince[];
 }
 
 let initialState: category = {
     category: [],
     price: [],
     area: [],
+    provinces: [],
 };
 
 export const CategorySlice = createSlice({
@@ -28,6 +30,9 @@ export const CategorySlice = createSlice({
             })
             .addCase(actions.getArea.fulfilled, (state, action) => {
                 state.area = action.payload;
+            })
+            .addCase(actions.getProvinces.fulfilled, (state, action) => {
+                state.provinces = action.payload;
             });
     },
 });

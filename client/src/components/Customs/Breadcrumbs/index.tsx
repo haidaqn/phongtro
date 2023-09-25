@@ -1,7 +1,7 @@
 import * as React from 'react';
-import danang from '../../assets/thanh-toan/location_dn.jpg';
-import hcm from '../../assets/thanh-toan/location_hcm.jpg';
-import hn from '../../assets/thanh-toan/location_hn.jpg';
+import danang from '../../../assets/thanh-toan/location_dn.jpg';
+import hcm from '../../../assets/thanh-toan/location_hcm.jpg';
+import hn from '../../../assets/thanh-toan/location_hn.jpg';
 import Link from 'next/link';
 import Image from 'next/image';
 

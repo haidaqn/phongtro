@@ -13,6 +13,10 @@ const categoryApis = {
         const url = 'price/all';
         return axiosClient.get(url);
     },
+    getProvinces() {
+        const url = 'provinces/all';
+        return axiosClient.get(url);
+    },
 };
 
 export default categoryApis;

@@ -7,8 +7,8 @@ export interface Category {
     order?: string;
 }
 
-export interface PriceAndArea {
+export interface PriceAndAreaAndProvince {
     code: string;
     value: string;
-    order: string;
+    order: string | null;
 }

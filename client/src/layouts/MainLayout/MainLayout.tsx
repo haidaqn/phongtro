@@ -2,12 +2,12 @@ import * as React from 'react';
 import { LayoutProps } from '@/models/common';
 import CustomHeader from '@/modules/main/header/Header';
 import Footer from '@/modules/main/footer/Footer';
-import Search from '@/modules/Search';
+import Search from '@/components/Customs/Search';
 import { Layout } from 'antd';
 import SlideBar from '@/modules/SlideBar';
-import Breadcrumbs from '@/modules/Breadcrumbs';
+import Breadcrumbs from '@/components/Customs/Breadcrumbs';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
-import { getCategories, getPrice, getArea } from '@/features/Category/categoryActions';
+import { getCategories, getPrice, getArea, getProvinces } from '@/features/Category/categoryActions';
 
 const { Content } = Layout;
 
@@ -18,6 +18,7 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
         dispatch(getCategories());
         dispatch(getPrice());
         dispatch(getArea());
+        dispatch(getProvinces());
     }, []);
 
     const { category, area, price } = useAppSelector((state) => state.category);

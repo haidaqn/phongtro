@@ -91,3 +91,30 @@ a {
   text-decoration: none;
 }
 
+.ant-modal-header {
+  text-align: center;
+}
+
+
+input[type="range"]::-webkit-slider-runnable-track{
+   -webkit-appearance:  none ;
+  height: 6px;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:  none;
+  width:2rem;
+  height: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  border : solid 1px #ccc;
+  cursor: pointer !important;
+  margin-top: -0.6rem;
+  pointer-events: auto;
+  cursor: pointer;
+} 
+
+input[type="range"]::-webkit-slider-thumb:active{
+  border : solid 1px rgb(144,211,255);
+  
+ } 

@@ -5,11 +5,11 @@ import { FontColorsOutlined } from '@ant-design/icons';
 const { Text } = Typography;
 
 interface SearchItemProps {
-    IconBefore?: ReactNode;
-    IconAfter?: ReactNode;
+    IconBefore: ReactNode;
+    IconAfter: ReactNode;
     text?: string;
     fontWeight?: boolean;
-    defaultText?: string;
+    defaultText: string;
 }
 
 const SearchItem = ({ IconBefore, IconAfter, text, fontWeight, defaultText }: SearchItemProps) => {
