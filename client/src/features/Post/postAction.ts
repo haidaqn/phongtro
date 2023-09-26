@@ -35,9 +35,28 @@ export const getPostLimit = createAsyncThunk('app/post', async (data: data, { re
         if (responseCover?.err) return rejectWithValue(responseCover);
         return { ...responseCover.data, type: query };
     } else {
-        const response: unknown = await postsApi.getLimit({ query: { page } });
-        const responseCover: responseData = response as responseData;
-        if (responseCover?.err) return rejectWithValue(responseCover);
-        return { ...responseCover.data, type: query };
+        if (priceCode || areaCode) {
+            if (priceCode && !areaCode) {
+                const response: unknown = await postsApi.getLimit({ query: { page, priceCode } });
+                const responseCover: responseData = response as responseData;
+                if (responseCover?.err) return rejectWithValue(responseCover);
+                return { ...responseCover.data, type: query };
+            }
+            if (!priceCode && areaCode) {
+                const response: unknown = await postsApi.getLimit({ query: { page, areaCode } });
+                const responseCover: responseData = response as responseData;
+                if (responseCover?.err) return rejectWithValue(responseCover);
+                return { ...responseCover.data, type: query };
+            }
+            const response: unknown = await postsApi.getLimit({ query: { page, priceCode, areaCode } });
+            const responseCover: responseData = response as responseData;
+            if (responseCover?.err) return rejectWithValue(responseCover);
+            return { ...responseCover.data, type: query };
+        } else {
+            const response: unknown = await postsApi.getLimit({ query: { page } });
+            const responseCover: responseData = response as responseData;
+            if (responseCover?.err) return rejectWithValue(responseCover);
+            return { ...responseCover.data, type: query };
+        }
     }
 });

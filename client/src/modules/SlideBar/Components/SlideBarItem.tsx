@@ -38,7 +38,6 @@ const SlideBarItem = (props: propsData) => {
                             },
                         }),
                     );
-                    console.log('1');
                 } else {
                     dispatch(
                         actions.getPostLimit({
@@ -50,7 +49,8 @@ const SlideBarItem = (props: propsData) => {
                         }),
                     );
                 }
-            } else if (type === 'areaCode') {
+            }
+            if (type === 'areaCode') {
                 if (priceCode) {
                     dispatch(
                         actions.getPostLimit({
@@ -62,7 +62,6 @@ const SlideBarItem = (props: propsData) => {
                             },
                         }),
                     );
-                    console.log('2');
                 } else {
                     dispatch(
                         actions.getPostLimit({
@@ -83,10 +82,56 @@ const SlideBarItem = (props: propsData) => {
                         },
                     }),
                 );
-                console.log('3');
+            }
+        } else {
+            if (type === 'priceCode') {
+                if (areaCode) {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: areaCode,
+                                priceCode: code !== priceCode ? code : priceCode,
+                            },
+                        }),
+                    );
+                } else {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                priceCode: code !== priceCode ? code : priceCode,
+                            },
+                        }),
+                    );
+                }
+            } else {
+                if (priceCode) {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: code !== areaCode ? code : areaCode,
+                                priceCode: priceCode,
+                            },
+                        }),
+                    );
+                } else {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: code !== areaCode ? code : areaCode,
+                            },
+                        }),
+                    );
+                }
             }
         }
-        // console.log(routerName, priceCode, areaCode);
     };
 
     return (

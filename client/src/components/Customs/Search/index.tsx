@@ -3,6 +3,7 @@ import SearchItem from '@/components/Common/SearchItem';
 import { useCallback, useState } from 'react';
 import icons from '../../../utils/Icons';
 import Modal from '../Modal/Modal';
+import * as actions from '@/features/Post/postAction';
 
 const { HiOutlineLocationMarker, BsChevronRight, TbReportMoney, RiCrop2Line } = icons;
 
@@ -32,22 +33,18 @@ const Search = () => {
     const handleSelect = useCallback(
         (data: string, title: string) => {
             if (title === 'CHỌN LOẠI BẤT ĐỘNG SẢN') {
-                console.log(data);
                 const result = category.find((item) => item.code === data);
                 if (result) setCategoryHome(result.value);
             }
             if (title === 'CHỌN TỈNH THÀNH') {
-                console.log(data);
                 const result = provinces.find((item) => item.code === data);
                 if (result) setAddress(result.value);
             }
             if (title === 'CHỌN GIÁ') {
-                console.log(data);
                 const result = price.find((item) => item.code === data);
                 if (result) setPriceSelect(result.value);
             }
             if (title === 'CHỌN DIỆN TÍCH') {
-                console.log(data);
                 const result = area.find((item) => item.code === data);
                 if (result) setAreaSelect(result.value);
             }
@@ -55,9 +52,22 @@ const Search = () => {
         [categoryHome, address, priceSelect, areaSelect],
     );
     const handleSearch = () => {
-        if (categoryHome !== 'Phòng trọ, Nhà trọ...') {
-            alert('1');
-        }
+        const priceCode = price.find((item) => item.value === priceSelect)?.code;
+        const categoryCode = category.find((item) => item.value === categoryHome)?.code;
+        const areaCode = area.find((item) => item.value === areaSelect)?.code;
+
+        // console.log(priceCode, categoryCode, areaCode);
+
+        dispatch(
+            actions.getPostLimit({
+                query: {
+                    page: 0,
+                    categoryCode: categoryCode,
+                    areaCode: areaCode,
+                    priceCode: priceCode,
+                },
+            }),
+        );
     };
 
     return (
