@@ -1,7 +1,6 @@
-import { createAsyncThunk, isRejectedWithValue } from '@reduxjs/toolkit';
 import categoryApis from '@/apiClient/category';
-import { Category, PriceAndArea } from '@/models';
-import create from '@ant-design/icons/lib/components/IconFont';
+import { Category, PriceAndAreaAndProvince } from '@/models';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 interface responseData {
     err: number;
@@ -11,7 +10,7 @@ interface responseData {
 
 interface responsePriceAndAreaData {
     err: number;
-    response: PriceAndArea[];
+    response: PriceAndAreaAndProvince[];
     msg: string;
 }
 

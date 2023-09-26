@@ -9,14 +9,21 @@ const { HiOutlineLocationMarker, BsChevronRight, TbReportMoney, RiCrop2Line } = 
 
 const Search = () => {
     const { area, price, provinces, category } = useAppSelector((state) => state.category);
+    const { type } = useAppSelector((state) => state.post);
     const dispatch = useAppDispatch();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalData, setModalData] = useState<any>([]);
     const [title, setTitle] = useState<string>('');
-    const [categoryHome, setCategoryHome] = useState<string>('Phòng trọ, Nhà trọ...');
+    const [categoryHome, setCategoryHome] = useState<string>(
+        category.find((item) => item.value === type.areaCode)?.value || 'Phòng trọ, Nhà trọ...',
+    );
     const [address, setAddress] = useState<string>('Toàn quốc');
-    const [priceSelect, setPriceSelect] = useState<string>('Chọn giá');
-    const [areaSelect, setAreaSelect] = useState<string>('Chọn diện tích');
+    const [priceSelect, setPriceSelect] = useState<string>(
+        price.find((item) => item.value === type.priceCode)?.value || 'Chọn giá',
+    );
+    const [areaSelect, setAreaSelect] = useState<string>(
+        area.find((item) => item.code === type.areaCode)?.value || 'Chọn diện tích',
+    );
 
     const handleOpenModal = (data: any, title: string) => {
         setModalData(data);
@@ -55,8 +62,6 @@ const Search = () => {
         const priceCode = price.find((item) => item.value === priceSelect)?.code;
         const categoryCode = category.find((item) => item.value === categoryHome)?.code;
         const areaCode = area.find((item) => item.value === areaSelect)?.code;
-
-        // console.log(priceCode, categoryCode, areaCode);
 
         dispatch(
             actions.getPostLimit({

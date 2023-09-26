@@ -1,5 +1,5 @@
 import { Category, PriceAndAreaAndProvince } from '@/models';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import * as actions from './categoryActions';
 
 export interface category {

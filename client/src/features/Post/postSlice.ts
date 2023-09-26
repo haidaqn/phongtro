@@ -1,5 +1,5 @@
 import { Post } from '@/models/Post';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import * as actions from './postAction';
 
 export interface post {
@@ -10,6 +10,7 @@ export interface post {
         priceCode: string;
         areaCode: string;
         page: number;
+        categoryCode: string;
     };
 }
 
@@ -20,6 +21,7 @@ let initialState: post = {
     type: {
         priceCode: '',
         areaCode: '',
+        categoryCode: '',
         page: 0,
     },
 };
@@ -38,6 +40,7 @@ export const PostSlice = createSlice({
             state.count = action.payload.count;
             state.type.areaCode = action.payload.type.areaCode || '';
             state.type.priceCode = action.payload.type.priceCode || '';
+            state.type.categoryCode = action.payload.type.categoryCode || '';
             state.type.page = action.payload.type.page || 0;
         });
     },

@@ -17,9 +17,8 @@ export interface propsData {
 
 const FixedTopHeader = (props: propsData) => {
     const { category } = props;
-
+    const categoryCode: string | null = useAppSelector((state) => state.post.type.categoryCode);
     const router = useRouter();
-    const currentType = router.query.type && router.query.type[0];
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector<boolean>((state: RootState) => state.user.isLoggedIn);
     const data = useAppSelector<{ name: string; phone: string }>((state: RootState) => state.user.data);
@@ -49,7 +48,6 @@ const FixedTopHeader = (props: propsData) => {
             }),
         );
     };
-
     return (
         <div className="">
             <EmptyLayout>
@@ -98,7 +96,7 @@ const FixedTopHeader = (props: propsData) => {
                 <div className="flex items-center h-full text-white text-base font-medium ml-[10%]">
                     <Link
                         href={'/'}
-                        className={`${router.pathname === '/' ? 'bg-red-500' : 'hover:bg-red-500'}
+                        className={`${router.pathname === `${categoryCode}/` ? 'bg-red-500' : 'hover:bg-red-500'}
                 h-full flex justify-center items-center px-3 py-1`}
                     >
                         Trang Chủ
@@ -108,7 +106,7 @@ const FixedTopHeader = (props: propsData) => {
                             onClick={() => handle(item.code)}
                             key={item.code}
                             href={item.code}
-                            className={`${currentType === `${item.code}` ? 'bg-red-500' : 'hover:bg-red-500'}
+                            className={`${item.code === `${categoryCode}` ? 'bg-red-500' : 'hover:bg-red-500'}
                 h-full flex justify-center items-center px-3 py-1`}
                         >
                             {item.value}
