@@ -24,7 +24,16 @@ const ListPosts = (props: propsData) => {
     const areaCode: string | null = useAppSelector((state: RootState) => state.post.type.areaCode);
 
     React.useEffect(() => {
-        if (priceCode && areaCode) {
+        if (!priceCode && !areaCode) {
+            dispatch(
+                getPostLimit({
+                    query: {
+                        page: page - 1,
+                        categoryCode: routerName,
+                    },
+                }),
+            );
+        } else if (priceCode && areaCode) {
             dispatch(
                 getPostLimit({
                     query: {
@@ -32,15 +41,6 @@ const ListPosts = (props: propsData) => {
                         categoryCode: routerName,
                         priceCode,
                         areaCode,
-                    },
-                }),
-            );
-        } else if (!priceCode && !areaCode) {
-            dispatch(
-                getPostLimit({
-                    query: {
-                        page: page - 1,
-                        categoryCode: routerName,
                     },
                 }),
             );

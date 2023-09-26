@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import logo from '@/assets/logo-phongtro.svg';
-import EmptyLayout from '@/layouts/EmptyLayout/EmptyLayout';
-import { UserAddOutlined, LogoutOutlined } from '@ant-design/icons';
-import { items } from '@/utils/Contants';
-import { Button } from 'antd';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { RootState } from '@/app/store';
-import { setData, setIsLoggedIn } from '@/features/User/useSlice';
-import { Category } from '@/models';
+import logo from '@/assets/logo-phongtro.svg';
 import * as actions from '@/features/Post/postAction';
+import { setData, setIsLoggedIn } from '@/features/User/useSlice';
+import EmptyLayout from '@/layouts/EmptyLayout/EmptyLayout';
+import { Category } from '@/models';
+import { LogoutOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 export interface propsData {
     category: Category[];
 }
@@ -50,8 +49,6 @@ const FixedTopHeader = (props: propsData) => {
             }),
         );
     };
-
-    // console.log(currentType);
 
     return (
         <div className="">

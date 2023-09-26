@@ -1,11 +1,11 @@
 import * as React from 'react';
 import SlideBarItem from './Components/SlideBarItem';
-import { Category, PriceAndArea } from '@/models';
+import { Category, PriceAndAreaAndProvince } from '@/models';
 
 export interface propsData {
     category: Category[];
-    price: PriceAndArea[];
-    area: PriceAndArea[];
+    price: PriceAndAreaAndProvince[];
+    area: PriceAndAreaAndProvince[];
 }
 
 const SlideBar = (props: propsData) => {

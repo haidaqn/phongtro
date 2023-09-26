@@ -1,6 +1,6 @@
 import * as React from 'react';
 import icons from '@/utils/Icons';
-import { Category, PriceAndArea } from '@/models';
+import { Category, PriceAndAreaAndProvince } from '@/models';
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import * as actions from '@/features/Post/postAction';
@@ -9,7 +9,7 @@ import { RootState } from '@/app/store';
 
 export interface propsData {
     title: string;
-    content?: Category[] | PriceAndArea[];
+    content?: Category[] | PriceAndAreaAndProvince[];
     isDouble: boolean;
     type: string | '';
 }
@@ -20,67 +20,73 @@ const SlideBarItem = (props: propsData) => {
     const { title, content, isDouble, type } = props;
     const dispatch = useAppDispatch();
     const router = useRouter();
-    const routerName = router.query.type && router.query.type[0];
+    const routerName = (router.query.type && router.query.type[0]) || '';
     const priceCode: string | null = useAppSelector((state: RootState) => state.post.type.priceCode);
     const areaCode: string | null = useAppSelector((state: RootState) => state.post.type.areaCode);
 
     const handle = (code: string): void => {
-        if (type === 'priceCode') {
-            if (areaCode) {
-                dispatch(
-                    actions.getPostLimit({
-                        query: {
-                            page: 0,
-                            categoryCode: routerName,
-                            areaCode: areaCode,
-                            priceCode: code !== priceCode ? code : priceCode,
-                        },
-                    }),
-                );
+        if (routerName) {
+            if (type === 'priceCode') {
+                if (areaCode) {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: areaCode,
+                                priceCode: code !== priceCode ? code : priceCode,
+                            },
+                        }),
+                    );
+                    console.log('1');
+                } else {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                priceCode: code !== priceCode ? code : priceCode,
+                            },
+                        }),
+                    );
+                }
+            } else if (type === 'areaCode') {
+                if (priceCode) {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: code !== areaCode ? code : areaCode,
+                                priceCode: priceCode,
+                            },
+                        }),
+                    );
+                    console.log('2');
+                } else {
+                    dispatch(
+                        actions.getPostLimit({
+                            query: {
+                                page: 0,
+                                categoryCode: routerName,
+                                areaCode: code !== areaCode ? code : areaCode,
+                            },
+                        }),
+                    );
+                }
             } else {
                 dispatch(
                     actions.getPostLimit({
                         query: {
                             page: 0,
                             categoryCode: routerName,
-                            priceCode: code !== priceCode ? code : priceCode,
                         },
                     }),
                 );
+                console.log('3');
             }
-        } else if (type === 'areaCode') {
-            if (priceCode) {
-                dispatch(
-                    actions.getPostLimit({
-                        query: {
-                            page: 0,
-                            categoryCode: routerName,
-                            areaCode: code !== areaCode ? code : areaCode,
-                            priceCode: priceCode,
-                        },
-                    }),
-                );
-            } else {
-                dispatch(
-                    actions.getPostLimit({
-                        query: {
-                            page: 0,
-                            categoryCode: routerName,
-                            areaCode: code !== areaCode ? code : areaCode,
-                        },
-                    }),
-                );
-            }
-        } else {
-            dispatch(
-                actions.getPostLimit({
-                    query: {
-                        page: 0,
-                        categoryCode: routerName,
-                    },
-                }),
-            );
         }
+        // console.log(routerName, priceCode, areaCode);
     };
 
     return (
