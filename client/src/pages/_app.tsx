@@ -1,18 +1,16 @@
 import '../styles/globals.css';
-// import axiosClient from '@/ApiClient/axiosClient';
-// import { ToastContainer } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/lib/integration/react';
-import { persisitor, store } from '@/app/store';
+
+import { store } from '@/app/store';
 import { AppProps } from 'next/app';
+import { SnackbarProvider } from 'notistack';
+import { Provider } from 'react-redux';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <Provider store={store}>
-            <PersistGate loading={null} persistor={persisitor}>
+            <SnackbarProvider autoHideDuration={2500} anchorOrigin={{ horizontal: 'right', vertical: 'top' }}>
                 <Component {...pageProps} />
-            </PersistGate>
+            </SnackbarProvider>
         </Provider>
     );
 }

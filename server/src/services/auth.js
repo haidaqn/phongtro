@@ -45,9 +45,8 @@ export const loginService = ({ phone, password }) =>
                 jwt.sign({ id: response.id, phone: response.phone }, process.env.SECRET_KEY, { expiresIn: '2d' });
             resolve({
                 err: token ? 0 : 2,
-                data: token ? { name: response.name, phone: response.phone } : 'no data',
+                data: token ? { name: response.name, phone: response.phone, token: token } : 'no data',
                 msg: token ? 'Login is successfully !' : response ? 'Password is wrong !' : 'Phone number not found !',
-                token: token || null,
             });
         } catch (error) {
             reject(error);

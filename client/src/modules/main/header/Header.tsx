@@ -2,7 +2,6 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { RootState } from '@/app/store';
 import logo from '@/assets/logo-phongtro.svg';
 import * as actions from '@/features/Post/postAction';
-import { setData, setIsLoggedIn } from '@/features/User/useSlice';
 import EmptyLayout from '@/layouts/EmptyLayout/EmptyLayout';
 import { Category } from '@/models';
 import { LogoutOutlined, UserAddOutlined } from '@ant-design/icons';
@@ -11,17 +10,21 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { authActions } from '@/features/auth/AuthSlice';
+import { useSnackbar } from 'notistack';
+
 export interface propsData {
     category: Category[];
 }
 
 const FixedTopHeader = (props: propsData) => {
     const { category } = props;
+    const { enqueueSnackbar } = useSnackbar();
     const categoryCode: string | null = useAppSelector((state) => state.post.type.categoryCode);
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const isLoggedIn = useAppSelector<boolean>((state: RootState) => state.user.isLoggedIn);
-    const data = useAppSelector<{ name: string; phone: string }>((state: RootState) => state.user.data);
+    const { currentUser, actionAuth } = useAppSelector((state: RootState) => state.auth);
+    const name = currentUser?.name;
     const [scrollY, setScrollY] = useState<number>(0);
     useEffect(() => {
         const handleScroll = () => {
@@ -34,8 +37,15 @@ const FixedTopHeader = (props: propsData) => {
     }, []);
 
     const handleLogout = () => {
-        dispatch(setData({ name: '', phone: '' }));
-        dispatch(setIsLoggedIn(false));
+        try {
+            dispatch(authActions.logout());
+            enqueueSnackbar('Đăng xuất thành công !', {
+                variant: 'success',
+            });
+            router.push('/');
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handle = (code: string): void => {
@@ -56,9 +66,9 @@ const FixedTopHeader = (props: propsData) => {
                         <Image src={logo} alt="Picture of the author" />
                     </Link>
                     <div className="flex gap-4 justify-center items-center">
-                        {isLoggedIn ? (
+                        {actionAuth === 'Success' ? (
                             <>
-                                {data?.name}
+                                {name}
                                 <Button
                                     onClick={() => handleLogout()}
                                     className="flex justify-center items-center bg-main h-10 text-white text-lg px-5 py-3 hover:opacity-90"

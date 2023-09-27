@@ -1,13 +1,11 @@
-import React from 'react';
-import MainLayout from '@/layouts/MainLayout/MainLayout';
-import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
-import { Form, Input, Button } from 'antd';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import authApi from '@/apiClient/auth';
 import { useAppDispatch } from '@/app/hooks';
-import { setIsLoggedIn, setData } from '@/features/User/useSlice';
+import { authActions } from '@/features/auth/AuthSlice';
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
+import { Button, Form, Input } from 'antd';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
+import * as yup from 'yup';
+import { useSnackbar } from 'notistack';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -17,19 +15,10 @@ const validationSchema = yup.object().shape({
     password: yup.string().required('Vui lòng nhập mật khẩu').min(8, 'Mật khẩu phải có ít nhất 8 ký tự'),
 });
 
-interface dataResponse {
-    err: number;
-    msg: string;
-    token: string;
-    data: {
-        name: string;
-        phone: string;
-    };
-}
-
 const LoginModule = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const { enqueueSnackbar } = useSnackbar();
     const formik = useFormik({
         initialValues: {
             phone: '',
@@ -37,13 +26,14 @@ const LoginModule = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            const response: unknown = await authApi.login(values);
-            const responseCover: dataResponse = response as dataResponse;
-            // console.log(response);
-            if (!responseCover.err) {
-                dispatch(setIsLoggedIn(!responseCover?.err));
-                dispatch(setData(responseCover.data));
+            try {
+                dispatch(authActions.login(values));
+                enqueueSnackbar('Đăng nhập thành công !', {
+                    variant: 'success',
+                });
                 router.push('/');
+            } catch (err) {
+                console.log(err);
             }
         },
     });

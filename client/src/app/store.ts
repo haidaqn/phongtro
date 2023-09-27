@@ -1,31 +1,33 @@
-import { Action, configureStore } from '@reduxjs/toolkit';
-import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
+import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './rootSaga';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
-import { ThunkAction } from 'redux-thunk';
-import { FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, persistStore } from 'redux-persist';
-import persistReducer from 'redux-persist/lib/persistReducer';
+
+import { persistReducer, persistStore } from 'redux-persist';
 import rootReducer from './rootReducer';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'post','category'],
+    whitelist: ['auth', 'post', 'category'],
 };
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-            },
-        }).concat(thunk),
+            serializableCheck: false,
+        }).concat(sagaMiddleware),
 });
 
-export const persisitor = persistStore(store);
-
-export type RootState = ReturnType<typeof store.getState>;
+sagaMiddleware.run(rootSaga);
+export const persistor = persistStore(store);
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
+
+//

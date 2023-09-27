@@ -1,13 +1,13 @@
 // reducers/index.js
 import { combineReducers } from 'redux';
-import userReducer from '@/features/User/useSlice';
 import postReducer from '@/features/Post/postSlice';
 import categoryReducer from '@/features/Category/categorySlice';
+import authReducer from '@/features/auth/AuthSlice';
 
 const rootReducer = combineReducers({
-    user: userReducer,
+    auth: authReducer,
     post: postReducer,
-    category :categoryReducer,
+    category: categoryReducer,
 });
 
 export default rootReducer;
