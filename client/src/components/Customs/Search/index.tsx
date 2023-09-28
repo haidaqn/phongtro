@@ -38,16 +38,13 @@ const Search = () => {
             if (title === 'CHỌN LOẠI BẤT ĐỘNG SẢN') {
                 const result = category.find((item) => item.code === data);
                 if (result) setCategoryHome(result.value);
-            }
-            if (title === 'CHỌN TỈNH THÀNH') {
+            } else if (title === 'CHỌN TỈNH THÀNH') {
                 const result = provinces.find((item) => item.code === data);
                 if (result) setProvince(result.value);
-            }
-            if (title === 'CHỌN GIÁ') {
+            } else if (title === 'CHỌN GIÁ') {
                 const result = price.find((item) => item.code === data);
                 if (result) setPriceSelect(result.value);
-            }
-            if (title === 'CHỌN DIỆN TÍCH') {
+            } else if (title === 'CHỌN DIỆN TÍCH') {
                 const result = area.find((item) => item.code === data);
                 if (result) setAreaSelect(result.value);
             }
