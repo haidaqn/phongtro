@@ -23,9 +23,11 @@ const SlideBarItem = (props: propsData) => {
     const routerName = (router.query.type && router.query.type[0]) || '';
     const priceCode: string | null = useAppSelector((state: RootState) => state.post.type.priceCode);
     const areaCode: string | null = useAppSelector((state: RootState) => state.post.type.areaCode);
-
+    const categoryCode: string | null = useAppSelector((state: RootState) => state.post.type.categoryCode);
+    const provinceCode: string | null = useAppSelector((state: RootState) => state.post.type.provinceCode);
+    console.log(routerName === '');
     const handle = (code: string): void => {
-        if (routerName) {
+        if (routerName !== '') {
             if (type === 'priceCode') {
                 if (areaCode) {
                     dispatch(

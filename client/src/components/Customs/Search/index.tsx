@@ -1,29 +1,25 @@
 import { useAppSelector, useAppDispatch } from '@/app/hooks';
 import SearchItem from '@/components/Common/SearchItem';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import icons from '../../../utils/Icons';
 import Modal from '../Modal/Modal';
 import * as actions from '@/features/Post/postAction';
+import { useRouter } from 'next/router';
 
 const { HiOutlineLocationMarker, BsChevronRight, TbReportMoney, RiCrop2Line } = icons;
 
 const Search = () => {
     const { area, price, provinces, category } = useAppSelector((state) => state.category);
-    const { type } = useAppSelector((state) => state.post);
+    const { areaCode, categoryCode, priceCode, provinceCode } = useAppSelector((state) => state.post.type);
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [modalData, setModalData] = useState<any>([]);
     const [title, setTitle] = useState<string>('');
-    const [categoryHome, setCategoryHome] = useState<string>(
-        category.find((item) => item.value === type.areaCode)?.value || 'Phòng trọ, Nhà trọ...',
-    );
+    const [categoryHome, setCategoryHome] = useState<string>('Phòng trọ, Nhà trọ...');
     const [province, setProvince] = useState<string>('Toàn quốc');
-    const [priceSelect, setPriceSelect] = useState<string>(
-        price.find((item) => item.value === type.priceCode)?.value || 'Chọn giá',
-    );
-    const [areaSelect, setAreaSelect] = useState<string>(
-        area.find((item) => item.code === type.areaCode)?.value || 'Chọn diện tích',
-    );
+    const [priceSelect, setPriceSelect] = useState<string>('Chọn giá');
+    const [areaSelect, setAreaSelect] = useState<string>('Chọn diện tích');
 
     const handleOpenModal = (data: any, title: string) => {
         setModalData(data);
@@ -63,7 +59,7 @@ const Search = () => {
         const categoryCode = category.find((item) => item.value === categoryHome)?.code;
         const areaCode = area.find((item) => item.value === areaSelect)?.code;
         const provinceCode = provinces.find((item) => item.value === province)?.code;
-        console.log(priceCode, categoryCode, areaCode, provinceCode);
+        // console.log(priceCode, categoryCode, areaCode, provinceCode);
         dispatch(
             actions.getPostLimit({
                 query: {
@@ -76,6 +72,17 @@ const Search = () => {
             }),
         );
     };
+
+    useEffect(() => {
+        setCategoryHome(
+            category.find((item) => `/${item.code}` === router.asPath)?.value ||
+                category.find((item) => item.value === categoryCode)?.value ||
+                'Phòng trọ, Nhà trọ...',
+        );
+        setProvince(provinces.find((item) => item.code === provinceCode)?.value || 'Toàn quốc');
+        setPriceSelect(price.find((item) => item.code === priceCode)?.value || 'Chọn giá');
+        setAreaSelect(area.find((item) => item.code === areaCode)?.value || 'Chọn diện tích');
+    }, [router.asPath, areaCode, categoryCode, priceCode, provinceCode]);
 
     return (
         <>

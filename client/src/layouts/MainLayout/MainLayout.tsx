@@ -21,7 +21,7 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
         dispatch(getProvinces());
     }, []);
 
-    const { category, area, price } = useAppSelector((state) => state.category);
+    const { category, area, price, provinces } = useAppSelector((state) => state.category);
 
     return (
         <Layout style={{ width: 'full' }}>
@@ -37,7 +37,7 @@ const MainLayout = ({ children }: LayoutProps): JSX.Element => {
                             {children}
                         </div>
                         <div className="flex-1 items-center justify-center">
-                            <SlideBar category={category} price={price} area={area} />
+                            <SlideBar category={category} price={price} area={area} provinces={provinces} />
                         </div>
                     </div>
                 </Content>
