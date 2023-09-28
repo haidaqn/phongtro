@@ -68,7 +68,7 @@ const FixedTopHeader = (props: propsData) => {
                     <div className="flex gap-4 justify-center items-center">
                         {actionAuth === 'Success' ? (
                             <>
-                                {name}
+                                <span className="text-lg font-semibold">Xin chào, {name}</span>
                                 <Button
                                     onClick={() => handleLogout()}
                                     className="flex justify-center items-center bg-main h-10 text-white text-lg px-5 py-3 hover:opacity-90"
@@ -94,7 +94,7 @@ const FixedTopHeader = (props: propsData) => {
                             </>
                         )}
                         <Button
-                            onClick={() => router.push('/dang-tin-moi')}
+                            // onClick={() => router.push('/dang-tin-moi')}
                             className="flex justify-center items-center bg-[#f73859] h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                         >
                             Đăng Tin Mới

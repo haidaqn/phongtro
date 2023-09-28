@@ -11,6 +11,7 @@ export interface post {
         areaCode: string;
         page: number;
         categoryCode: string;
+        provinceCode: string;
     };
 }
 
@@ -22,6 +23,7 @@ let initialState: post = {
         priceCode: '',
         areaCode: '',
         categoryCode: '',
+        provinceCode: '',
         page: 0,
     },
 };
@@ -41,6 +43,7 @@ export const PostSlice = createSlice({
             state.type.areaCode = action.payload.type.areaCode || '';
             state.type.priceCode = action.payload.type.priceCode || '';
             state.type.categoryCode = action.payload.type.categoryCode || '';
+            state.type.provinceCode = action.payload.type.provinceCode || '';
             state.type.page = action.payload.type.page || 0;
         });
     },

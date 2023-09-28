@@ -17,6 +17,7 @@ interface data {
         categoryCode?: string | null;
         priceCode?: string | null;
         areaCode?: string | null;
+        provinceCode?: string | null;
     };
 }
 export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithValue }) => {
@@ -27,12 +28,39 @@ export const getPosts = createAsyncThunk('app/post', async (data, { rejectWithVa
 });
 
 export const getPostLimit = createAsyncThunk('app/post', async (data: data, { rejectWithValue }) => {
-    const { page, priceCode, areaCode, categoryCode } = data.query;
+    const { page, priceCode, areaCode, categoryCode, provinceCode } = data.query;
     if (categoryCode) {
         const response: unknown = await postsApi.getLimit(data);
         const responseCover: responseData = response as responseData;
         if (responseCover?.err) return rejectWithValue(responseCover);
         return { ...responseCover.data, type: data.query };
+    }
+    if (provinceCode) {
+        if (priceCode || areaCode) {
+            if (priceCode && !areaCode) {
+                const response: unknown = await postsApi.getLimit({ query: { page, priceCode, provinceCode } });
+                const responseCover: responseData = response as responseData;
+                if (responseCover?.err) return rejectWithValue(responseCover);
+                return { ...responseCover.data, type: data.query };
+            }
+            if (!priceCode && areaCode) {
+                const response: unknown = await postsApi.getLimit({ query: { page, areaCode, provinceCode } });
+                const responseCover: responseData = response as responseData;
+                if (responseCover?.err) return rejectWithValue(responseCover);
+                return { ...responseCover.data, type: data.query };
+            }
+            const response: unknown = await postsApi.getLimit({
+                query: { page, priceCode, areaCode, provinceCode },
+            });
+            const responseCover: responseData = response as responseData;
+            if (responseCover?.err) return rejectWithValue(responseCover);
+            return { ...responseCover.data, type: data.query };
+        } else {
+            const response: unknown = await postsApi.getLimit({ query: { page, provinceCode } });
+            const responseCover: responseData = response as responseData;
+            if (responseCover?.err) return rejectWithValue(responseCover);
+            return { ...responseCover.data, type: data.query };
+        }
     } else {
         if (priceCode || areaCode) {
             if (priceCode && !areaCode) {

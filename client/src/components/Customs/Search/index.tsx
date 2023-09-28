@@ -17,7 +17,7 @@ const Search = () => {
     const [categoryHome, setCategoryHome] = useState<string>(
         category.find((item) => item.value === type.areaCode)?.value || 'Phòng trọ, Nhà trọ...',
     );
-    const [address, setAddress] = useState<string>('Toàn quốc');
+    const [province, setProvince] = useState<string>('Toàn quốc');
     const [priceSelect, setPriceSelect] = useState<string>(
         price.find((item) => item.value === type.priceCode)?.value || 'Chọn giá',
     );
@@ -45,7 +45,7 @@ const Search = () => {
             }
             if (title === 'CHỌN TỈNH THÀNH') {
                 const result = provinces.find((item) => item.code === data);
-                if (result) setAddress(result.value);
+                if (result) setProvince(result.value);
             }
             if (title === 'CHỌN GIÁ') {
                 const result = price.find((item) => item.code === data);
@@ -56,13 +56,14 @@ const Search = () => {
                 if (result) setAreaSelect(result.value);
             }
         },
-        [categoryHome, address, priceSelect, areaSelect],
+        [categoryHome, province, priceSelect, areaSelect],
     );
     const handleSearch = () => {
         const priceCode = price.find((item) => item.value === priceSelect)?.code;
         const categoryCode = category.find((item) => item.value === categoryHome)?.code;
         const areaCode = area.find((item) => item.value === areaSelect)?.code;
-
+        const provinceCode = provinces.find((item) => item.value === province)?.code;
+        console.log(priceCode, categoryCode, areaCode, provinceCode);
         dispatch(
             actions.getPostLimit({
                 query: {
@@ -70,6 +71,7 @@ const Search = () => {
                     categoryCode: categoryCode,
                     areaCode: areaCode,
                     priceCode: priceCode,
+                    provinceCode: provinceCode,
                 },
             }),
         );
@@ -93,7 +95,7 @@ const Search = () => {
                     <SearchItem
                         IconBefore={<HiOutlineLocationMarker />}
                         IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
-                        defaultText={address}
+                        defaultText={province}
                     />
                 </span>
                 <span className="cursor-pointer flex-2" onClick={() => handleOpenModal(price, 'CHỌN GIÁ')}>
