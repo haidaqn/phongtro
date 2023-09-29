@@ -6,7 +6,7 @@ const History = {
         if (History.navigate) {
             History.navigate(page, ...rest);
         } else {
-            console.error('History.navigate is not defined.');
+            console.log('History.navigate is not defined.');
         }
     },
 };

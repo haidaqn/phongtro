@@ -1,4 +1,4 @@
-import { useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { authActions } from '@/features/auth/AuthSlice';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import { Button, Form, Input } from 'antd';
@@ -6,6 +6,7 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -18,6 +19,7 @@ const validationSchema = yup.object().shape({
 const LoginModule = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
+    const { actionAuth } = useAppSelector((state) => state.auth);
     const { enqueueSnackbar } = useSnackbar();
     const formik = useFormik({
         initialValues: {
@@ -28,15 +30,19 @@ const LoginModule = () => {
         onSubmit: async (values) => {
             try {
                 dispatch(authActions.login(values));
-                enqueueSnackbar('Đăng nhập thành công !', {
-                    variant: 'success',
-                });
-                router.push('/');
             } catch (err) {
                 console.log(err);
             }
         },
     });
+
+    useEffect(() => {
+        if (actionAuth == 'Failed') {
+            enqueueSnackbar('Đăng nhập không thành công !', {
+                variant: 'error',
+            });
+        }
+    }, [actionAuth]);
 
     return (
         <AuthLayout>

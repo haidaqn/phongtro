@@ -5,14 +5,18 @@ export interface AuthState {
     logging?: boolean;
     registering?: boolean;
     actionAuth: 'No action' | 'Success' | 'Failed';
-    currentUser?: User;
+    currentUser: User;
 }
 
 const initialState: AuthState = {
     logging: false,
     registering: false,
     actionAuth: 'No action',
-    currentUser: undefined,
+    currentUser: {
+        name: '',
+        phone: '',
+        token: '',
+    },
 };
 
 const authSlice = createSlice({

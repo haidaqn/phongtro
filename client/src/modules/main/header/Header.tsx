@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { authActions } from '@/features/auth/AuthSlice';
 import { useSnackbar } from 'notistack';
+import { useInforUser } from '@/hooks';
 
 export interface propsData {
     category: Category[];
@@ -20,11 +21,12 @@ export interface propsData {
 const FixedTopHeader = (props: propsData) => {
     const { category } = props;
     const { enqueueSnackbar } = useSnackbar();
+    const user = useInforUser();
     const categoryCode: string | null = useAppSelector((state) => state.post.type.categoryCode);
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const { currentUser, actionAuth } = useAppSelector((state: RootState) => state.auth);
-    const name = currentUser?.name;
+    const actionAuth = useAppSelector((state: RootState) => state.auth.actionAuth);
+    const name = useAppSelector((state: RootState) => state.auth.currentUser?.name);
     const [scrollY, setScrollY] = useState<number>(0);
     useEffect(() => {
         const handleScroll = () => {
@@ -42,7 +44,6 @@ const FixedTopHeader = (props: propsData) => {
             enqueueSnackbar('Đăng xuất thành công !', {
                 variant: 'success',
             });
-            router.push('/');
         } catch (err) {
             console.log(err);
         }
@@ -66,14 +67,13 @@ const FixedTopHeader = (props: propsData) => {
                         <Image src={logo} alt="Picture of the author" />
                     </Link>
                     <div className="flex gap-4 justify-center items-center">
-                        {actionAuth === 'Success' ? (
+                        {name ? (
                             <>
                                 <span className="text-lg font-semibold">Xin chào, {name}</span>
                                 <Button
                                     onClick={() => handleLogout()}
                                     className="flex justify-center items-center bg-main h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                                 >
-                                    {/* <UserAddOutlined style={{ fontSize: '22px' }} /> */}
                                     Đăng Xuất
                                 </Button>
                             </>

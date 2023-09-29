@@ -23,9 +23,11 @@ export const registerService = ({ phone, password, name }) =>
                 response[1] &&
                 jwt.sign({ id: response[0].id, phone: response[0].phone }, process.env.SECRET_KEY, { expiresIn: '2d' });
             resolve({
-                err: token ? 0 : 2,
-                msg: token ? 'Register is successfully !' : 'Phone number has been aldready used !',
-                token: token || null,
+                status: token ? true : false,
+                message: token ? 'Register is successfully !' : 'Phone number has been aldready used !',
+                data: token
+                    ? { name: response.name, phone: response.phone, token: token }
+                    : { name: '', phone: '', token: '' },
             });
         } catch (error) {
             reject(error);
@@ -44,9 +46,15 @@ export const loginService = ({ phone, password }) =>
                 isCorrectPassword &&
                 jwt.sign({ id: response.id, phone: response.phone }, process.env.SECRET_KEY, { expiresIn: '2d' });
             resolve({
-                err: token ? 0 : 2,
-                data: token ? { name: response.name, phone: response.phone, token: token } : 'no data',
-                msg: token ? 'Login is successfully !' : response ? 'Password is wrong !' : 'Phone number not found !',
+                status: token ? true : false,
+                data: token
+                    ? { name: response.name, phone: response.phone, token: token }
+                    : { name: '', phone: '', token: '' },
+                message: token
+                    ? 'Login is successfully !'
+                    : response
+                    ? 'Password is wrong !'
+                    : 'Phone number not found !',
             });
         } catch (error) {
             reject(error);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
 import { Form, Input, Button } from 'antd';
 import { useFormik } from 'formik';
@@ -6,6 +6,9 @@ import * as yup from 'yup';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import authApi from '@/apiClient/auth';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { authActions } from '@/features/auth/AuthSlice';
+import { useSnackbar } from 'notistack';
 
 const validationSchema = yup.object().shape({
     phone: yup.string().required('Vui lòng nhập số điện thoại'),
@@ -22,6 +25,10 @@ const validationSchema = yup.object().shape({
 });
 
 const RegisterModule = () => {
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+    const { enqueueSnackbar } = useSnackbar();
+    const { actionAuth } = useAppSelector((state) => state.auth);
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -32,10 +39,17 @@ const RegisterModule = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             const { confirmPassword, ...data } = values;
-            const response = await authApi.register(data);
-            // console.log(response);
+            dispatch(authActions.register(data));
         },
     });
+
+    useEffect(() => {
+        if (actionAuth == 'Failed') {
+            enqueueSnackbar('Đăng ký không thành công !', {
+                variant: 'error',
+            });
+        }
+    }, [actionAuth]);
 
     return (
         <AuthLayout>
@@ -96,7 +110,6 @@ const RegisterModule = () => {
                         </Button>
                     </Form>
                     <div className="">
-                        <span>Bấm vào nút đăng ký tức là bạn đã đồng ý với quy định sử dụng của chúng tôi</span>
                         <span>
                             Bạn đã có tài khoản?
                             <Link className="text-main hover:text-orange-300" href="/auth/login">

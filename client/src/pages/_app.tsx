@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-
 import { store } from '@/app/store';
 import { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';

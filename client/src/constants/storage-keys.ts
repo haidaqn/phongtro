@@ -1,8 +1,8 @@
 const StorageKeys = {
     USER: 'user',
     TOKEN: 'access_token',
-    NAMEUSER: 'name_user',
-    PHONEUSER: 'phone_user',
+    NAME_USER: 'name_user',
+    PHONE_USER: 'phone_user',
 };
 
 export default StorageKeys;
