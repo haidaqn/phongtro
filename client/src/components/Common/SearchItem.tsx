@@ -1,6 +1,5 @@
-import React, { ReactNode, memo } from 'react';
 import { Card, Space, Typography } from 'antd';
-import { FontColorsOutlined } from '@ant-design/icons';
+import { ReactNode, memo } from 'react';
 
 const { Text } = Typography;
 

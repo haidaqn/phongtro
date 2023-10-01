@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { Post } from '@/models/Post';
-import PostItem from './components/PostItem';
-import { useAppSelector, useAppDispatch } from '@/app/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { RootState } from '@/app/store';
-import { getPostLimit } from '@/features/Post/postAction';
 import Pagination from '@/components/Common/Pagination';
+import { getPostLimit } from '@/features/Post/postAction';
+import { Post } from '@/models/Post';
 import { useRouter } from 'next/router';
-import { setType } from '@/features/Post/postSlice';
+import * as React from 'react';
+import PostItem from './components/PostItem';
 
 interface propsData {}
 

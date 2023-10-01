@@ -100,6 +100,7 @@ const Search = () => {
                         IconBefore={<HiOutlineLocationMarker />}
                         IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
                         defaultText={province}
+                        fontWeight
                     />
                 </span>
                 <span className="cursor-pointer flex-2" onClick={() => handleOpenModal(price, 'CHỌN GIÁ')}>
@@ -107,6 +108,7 @@ const Search = () => {
                         IconBefore={<TbReportMoney />}
                         IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
                         defaultText={priceSelect}
+                        fontWeight
                     />
                 </span>
                 <span className="cursor-pointer flex-2" onClick={() => handleOpenModal(area, 'CHỌN DIỆN TÍCH')}>
@@ -114,6 +116,7 @@ const Search = () => {
                         IconBefore={<RiCrop2Line />}
                         IconAfter={<BsChevronRight color="rgb(156, 163, 175)" />}
                         defaultText={areaSelect}
+                        fontWeight
                     />
                 </span>
                 <button
