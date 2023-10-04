@@ -1,4 +1,3 @@
-import React from 'react';
 import { CityRoot, DistrictRoot } from '@/models/Address';
 
 interface propsData {
@@ -10,7 +9,7 @@ interface propsData {
     type: string;
 }
 
-const SelectAddress = (props: propsData) => {
+export const SelectAddress = (props: propsData) => {
     const { label, optionsCity, optionsDistrict, value, setValue, type } = props;
 
     const handleSelect = (value: string) => {
@@ -61,5 +60,3 @@ const SelectAddress = (props: propsData) => {
         </div>
     );
 };
-
-export default SelectAddress;

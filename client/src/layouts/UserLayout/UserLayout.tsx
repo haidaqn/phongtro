@@ -161,6 +161,7 @@ const UserLayout = ({ children }: LayoutProps): JSX.Element => {
                                 backgroundColor: 'white',
                                 padding: '24px',
                                 boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+                                marginBottom: '20px',
                             }}
                         >
                             {children}

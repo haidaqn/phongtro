@@ -2,7 +2,7 @@ import React from 'react';
 import { Input, Typography } from 'antd';
 
 interface propsData {
-    placeholder: string;
+    placeholder?: string;
     label: string;
     type: string;
     value?: string;

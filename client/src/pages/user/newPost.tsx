@@ -8,8 +8,7 @@ const newPost = () => {
     return (
         <UserLayout>
             <div className="flex gap-5">
-                <div className="flex-2 flex flex-col gap-2">
-                    <Title level={3}>Địa chỉ cho thuê:</Title>
+                <div className="flex-2">
                     <Address />
                 </div>
                 <div className="flex-1 border"></div>
