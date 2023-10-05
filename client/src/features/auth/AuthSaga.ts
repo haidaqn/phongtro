@@ -19,6 +19,7 @@ function* handleLogin(action: PayloadAction<LoginForm>) {
             const user = res.data;
             yield put(authActions.loginSuccess(user));
             localStorage.setItem(StorageKeys.TOKEN, user.token);
+            localStorage.setItem(StorageKeys.ID_USER, user.id);
             localStorage.setItem(StorageKeys.NAME_USER, user.name);
             localStorage.setItem(StorageKeys.PHONE_USER, user.phone);
             Router.push('/');

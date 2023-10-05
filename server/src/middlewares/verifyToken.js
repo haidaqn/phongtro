@@ -1,37 +1,32 @@
-const jwt = require('jsonwebtoken');
-const asyncHandler = require('express-async-handler');
+import jwt from 'jsonwebtoken';
 
 //
-const verifyAccessToken = asyncHandler(async (req, res, next) => {
-    const token = req.headers['access-token']; // Lấy token từ header
-    // console.log(token);
-    if (!token) return res.status(404).json({ err: 1, msg: 'Missing token !' });
-
+export const verifyAccessToken = async (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+    if (!token)
+        return res.json({
+            data: {
+                success: false,
+            },
+        });
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log(decoded);
-        req.user = decoded;
-        next();
+        jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+            if (err) {
+                return res.json({
+                    data: {
+                        success: false,
+                    },
+                });
+            }
+            req.user = user;
+            next();
+        });
     } catch (err) {
         console.error(err);
-        return res.status(401).json({ err: 1, msg: 'Require authentication !' });
-    }
-});
-
-const isAdmin = asyncHandler(async (req, res, next) => {
-    const { role } = req.user;
-    if (role != 2003) {
-        return res.status(401).json({
-            success: false,
-            message: 'No admin ..',
+        return res.json({
+            data: {
+                success: false,
+            },
         });
     }
-    next();
-});
-
-// export
-
-module.exports = {
-    verifyAccessToken,
-    isAdmin,
 };

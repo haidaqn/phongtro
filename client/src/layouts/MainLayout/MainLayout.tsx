@@ -8,6 +8,7 @@ import SlideBar from '@/modules/SlideBar';
 import Breadcrumbs from '@/components/Customs/Breadcrumbs';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { getCategories, getPrice, getArea, getProvinces } from '@/features/Category/categoryActions';
+import authApi from '@/apiClient/auth';
 
 const { Content } = Layout;
 

@@ -10,6 +10,10 @@ const authApi = {
         const url = 'auth/register';
         return axiosClient.post(url, data);
     },
+    getHello() {
+        const url = 'auth/verifyToken';
+        return axiosClient.get(url);
+    },
 };
 
 export default authApi;

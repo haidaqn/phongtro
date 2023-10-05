@@ -3,7 +3,7 @@ require('dotenv').config();
 import { v4 as uuidv4, v1, v4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import generateCode from '../utils/generateCode';
-
+import { getNumberFromStringV2 } from '../utils/common';
 import chothuecanho from '../../data/chothuecanho.json';
 import chothuematbang from '../../data/chothuematbang.json';
 import nhachothue from '../../data/nhachothue.json';
@@ -73,6 +73,8 @@ export const insertService = () =>
                         priceCode: dataPrice.find((price) => price.max > currentPrice && price.min <= currentPrice)
                             ?.code,
                         provinceCode,
+                        priceNumber: getNumberFromStringV2(item.headerData.attributes.price),
+                        areaNumber: getNumberFromStringV2(item.headerData.attributes.acreage),
                     });
                     // attributes db
                     await db.Attribute.create({

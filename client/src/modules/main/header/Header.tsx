@@ -123,7 +123,7 @@ const FixedTopHeader = (props: propsData) => {
                             </>
                         )}
                         <Button
-                            // onClick={() => router.push('/dang-tin-moi')}
+                            onClick={() => router.push('/user/newPost')}
                             className="flex justify-center items-center bg-[#f73859] h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                         >
                             Đăng Tin Mới

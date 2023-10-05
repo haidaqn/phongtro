@@ -4,14 +4,17 @@ interface propsData {
     label: string;
     value: string;
     setValue: (name: string) => void;
-    options: Category[] | [];
+    options: Category[];
 }
 
 const SelectOptions = (props: propsData) => {
     const { label, value, setValue, options } = props;
 
     const handleSelect = (value: string) => {
-        setValue(value);
+        const newValue = options.find((item) => item.value === value)?.code;
+
+        console.log(newValue);
+        if (newValue) setValue(newValue);
     };
 
     return (

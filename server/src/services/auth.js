@@ -48,7 +48,7 @@ export const loginService = ({ phone, password }) =>
             resolve({
                 status: token ? true : false,
                 data: token
-                    ? { name: response.name, phone: response.phone, token: token }
+                    ? { name: response.name, phone: response.phone, token: token, id: response.id }
                     : { name: '', phone: '', token: '' },
                 message: token
                     ? 'Login is successfully !'
@@ -60,3 +60,19 @@ export const loginService = ({ phone, password }) =>
             reject(error);
         }
     });
+
+export const VerifyToken = (token) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+                if (err) {
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            });
+        } catch (error) {
+            reject(error);
+        }
+    });
+};

@@ -34,3 +34,24 @@ export const login = async (req, res) => {
         });
     }
 };
+
+export const verify = async (req, res) => {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        if (!token) {
+            return res.json({
+                data: {
+                    success: false,
+                },
+            });
+        }
+        const response = await authService.VerifyToken(token);
+        return res.json({
+            data: {
+                success: response ? true : false,
+            },
+        });
+    } catch (err) {
+        console.log(err);
+    }
+};

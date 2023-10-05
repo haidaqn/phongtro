@@ -16,6 +16,7 @@ const initialState: AuthState = {
         name: '',
         phone: '',
         token: '',
+        id: '',
     },
 };
 
@@ -54,7 +55,12 @@ const authSlice = createSlice({
             state.logging = false;
             state.registering = false;
             state.actionAuth = 'No action';
-            state.currentUser = undefined;
+            state.currentUser = {
+                name: '',
+                phone: '',
+                token: '',
+                id: '',
+            };
         },
         resetAction(state) {
             state.actionAuth = 'No action';
