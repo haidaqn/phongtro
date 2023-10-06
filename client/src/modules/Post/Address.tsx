@@ -106,24 +106,32 @@ const Address = () => {
         }
     };
 
-    const handleSubmit = () => {
-        const priceNumber = getCodePrice(price || 0);
-        const areaCode = getCodeArea(price || 0);
-        const payload = {
-            categoryCode: selectCategory,
-            title: title,
-            priceNumber: price,
-            areaNumber: area,
-            images: images,
-            address: dataInput,
-            priceCode: +priceNumber / 1000000,
-            areaCode: areaCode,
-            description: description,
-            target: selectObject || 'Tất cả',
-            provinceCode: selectProvince.name,
-            label: `${category.find((item) => item.code === selectCategory)?.value} ${dataInput.split(',')[0]}`,
-        };
-        console.log(payload); // labelCode
+    const handleSubmit = async () => {
+        const priceCode = getCodePrice(price || 0);
+        const areaCode = getCodeArea(area || 0);
+        if (price && area) {
+            const payload = {
+                categoryCode: `${category.find((item) => item.value === selectCategory)?.code}`,
+                title: title,
+                priceNumber: price / 1000000,
+                areaNumber: area,
+                images: images,
+                address: dataInput,
+                priceCode,
+                areaCode,
+                description: description,
+                target: selectObject || 'Tất cả',
+                provinceCode: selectProvince.name,
+                label: `${category.find((item) => item.code === selectCategory)?.value} ${dataInput.split(',')[0]}`,
+            };
+            try {
+                console.log(payload);
+                const response = await postsApi.createNewPost(payload);
+                console.log(response);
+            } catch (err) {
+                console.log(err);
+            }
+        }
     };
 
     useEffect(() => {

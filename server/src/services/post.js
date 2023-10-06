@@ -1,10 +1,9 @@
-import db from '../models';
 import { v4 } from 'uuid';
+import db from '../models';
 import generateCode from '../utils/generateCode';
 require('dotenv').config();
-import generateCode from '../utils/generateCode';
-import { getNumberFromStringV2 } from '../utils/common';
-import { getNumberFromString } from '../utils/common';
+const { Op } = require('sequelize');
+
 export const getPostsService = () =>
     new Promise(async (resolve, reject) => {
         try {
@@ -79,14 +78,15 @@ export const createNewPost = (body, userId) =>
             const labelCode = v4(generateCode(body.label));
             const hashtag = `${Math.round(Math.random() * 1000000)}`;
             const currentDate = new Date();
+            const formattedDate = currentDate.toISOString();
             await db.Post.create({
                 id: v4(),
                 title: body.title,
                 labelCode,
                 address: body.address || null,
                 attributesId,
-                categoryCode: body.code,
-                description: body.description || null,
+                categoryCode: body.categoryCode,
+                description: JSON.stringify(body.description) || null,
                 userId: userId,
                 overviewId,
                 imagesId,
@@ -96,6 +96,7 @@ export const createNewPost = (body, userId) =>
                 priceNumber: body.priceNumber || null,
                 areaNumber: body.areaNumber || null,
             });
+
             await db.Attribute.create({
                 id: attributesId,
                 price: `${
@@ -111,30 +112,40 @@ export const createNewPost = (body, userId) =>
                 id: imagesId,
                 image: JSON.stringify(body.images),
             });
+            // console.log({
+            //     id: overviewId,
+            //     code: `#${hashtag}`,
+            //     area: body.label,
+            //     type: 'Phòng trọ, nhà trọ',
+            //     target: body.target,
+            //     bonus: 'Tin thường',
+            //     created: currentDate,
+            //     expired: currentDate.setDate(currentDate.getDate() + 10),
+            // });
             await db.Overview.create({
                 id: overviewId,
                 code: `#${hashtag}`,
                 area: body.label,
-                type: body.category,
+                type: 'Phòng trọ, nhà trọ',
                 target: body.target,
                 bonus: 'Tin thường',
-                created: new Date(),
-                expire: currentDate.setDate(currentDate.getDate() + 10),
+                created: formattedDate,
+                expired: currentDate.setDate(currentDate.getDate() + 10),
             });
             await db.Province.findOrCreate({
                 where: {
                     [Op.or]: [
-                        { value: body.province.replace('Thành phố ', '') },
-                        { value: body.province.replace('Tỉnh ', '') },
+                        { value: body.provinceCode.replace('Thành phố ', ' ') },
+                        { value: body.provinceCode.replace('Tỉnh ', ' ') },
                     ],
                 },
                 defaults: {
-                    code: body.province.include('Thành phố')
-                        ? generateCode(body.province.replace('Thành phố ', ''))
-                        : generateCode(body.province.replace('Tỉnh ', '')),
-                    value: body.province.include('Thành phố')
-                        ? body.province.replace('Thành phố ', '')
-                        : body.province.replace('Tỉnh ', ''),
+                    code: body.provinceCode.includes('Thành phố')
+                        ? generateCode(body.provinceCode.replace('Thành phố ', ''))
+                        : generateCode(body.provinceCode.replace('Tỉnh ', '')),
+                    value: body.provinceCode.includes('Thành phố')
+                        ? body.provinceCode.replace('Thành phố ', '')
+                        : body.provinceCode.replace('Tỉnh ', ''),
                 },
             });
             await db.Label.findOrCreate({
@@ -144,6 +155,7 @@ export const createNewPost = (body, userId) =>
                     value: body.label,
                 },
             });
+            // console.log('true');
             resolve({ status: true });
         } catch (err) {
             reject(err);

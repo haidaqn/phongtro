@@ -11,10 +11,8 @@ const SelectOptions = (props: propsData) => {
     const { label, value, setValue, options } = props;
 
     const handleSelect = (value: string) => {
-        const newValue = options.find((item) => item.value === value)?.code;
-
-        console.log(newValue);
-        if (newValue) setValue(newValue);
+        // const newValue = options.find((item) => item.value === value)?.code;
+        setValue(value);
     };
 
     return (

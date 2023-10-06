@@ -6,16 +6,15 @@ interface data {
 interface PostData {
     categoryCode: string;
     title: string;
-    priceNumber: string;
-    areaNumber: string;
+    priceNumber: number;
+    areaNumber: number;
     images: string[];
     address: string;
-    priceCode: number;
+    priceCode: string;
     areaCode: string;
     description: string;
     target: string;
     provinceCode: string;
-    userId: string;
     label: string;
 }
 const postsApi = {
@@ -34,9 +33,9 @@ const postsApi = {
         const url = `https://api.cloudinary.com/v1_1/drussspqf/image/upload`;
         return axios.post(url, images);
     },
-    getNewPost(data: PostData) {
-        const url = '';
-        return axiosClient.post(url);
+    createNewPost(data: PostData) {
+        const url = 'post/create-post';
+        return axiosClient.post(url, data);
     },
 };
 

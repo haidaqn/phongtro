@@ -34,6 +34,7 @@ export const newPost = async (req, res) => {
                 success: false,
             });
         }
+        // console.log(req.body, id);
         const response = await postService.createNewPost(req.body, id);
         return res.json({ response });
     } catch (err) {
