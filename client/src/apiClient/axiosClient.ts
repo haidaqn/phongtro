@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-
+import StorageKeys from '@/constants/storage-keys';
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:8080/api/',
+    baseURL: `${StorageKeys.SERVER_API}`,
     headers: {
         'Content-Type': 'application/json',
     },

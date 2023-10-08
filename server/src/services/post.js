@@ -19,7 +19,7 @@ export const getPostsService = () =>
                     {
                         model: db.User,
                         as: 'user',
-                        attributes: ['name', 'zalo', 'phone'],
+                        attributes: ['name', 'phone'],
                     },
                 ],
                 raw: true,
