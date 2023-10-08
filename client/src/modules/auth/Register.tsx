@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react';
-import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
-import { Form, Input, Button } from 'antd';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import authApi from '@/apiClient/auth';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { authActions } from '@/features/auth/AuthSlice';
+import AuthLayout from '@/layouts/AuthLayout/AuthLayout';
+import { Button, Form, Input } from 'antd';
+import { useFormik } from 'formik';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
-
+import React, { useEffect } from 'react';
+import * as yup from 'yup';
+import { Loading } from '@/components/Common';
 const validationSchema = yup.object().shape({
     phone: yup.string().required('Vui lòng nhập số điện thoại'),
     name: yup.string().required('Vui lòng nhập tên'),
@@ -27,6 +26,7 @@ const validationSchema = yup.object().shape({
 const RegisterModule = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar();
     const { actionAuth } = useAppSelector((state) => state.auth);
     const formik = useFormik({
@@ -39,7 +39,11 @@ const RegisterModule = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             const { confirmPassword, ...data } = values;
+            setIsLoading(true);
             dispatch(authActions.register(data));
+            setTimeout(function () {
+                setIsLoading(false);
+            }, 1000);
         },
     });
 
@@ -55,6 +59,7 @@ const RegisterModule = () => {
         <AuthLayout>
             <div className="flex items-center justify-center my-7">
                 <div className="bg-white w-[600px] p-16 border rounded-lg flex flex-col gap-5">
+                    {isLoading && <Loading />}
                     <h1 className="text-3xl font-bold">Đăng ký</h1>
                     <Form onFinish={formik.handleSubmit} layout="vertical">
                         <div className="mb-2">

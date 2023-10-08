@@ -39,10 +39,10 @@ function getItem(
 
 const ListMenuItem: MenuProps['items'] = [
     getItem('Đăng tin cho thuê', 'newPost', <TagsOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
-    getItem('Quản lý tin đăng', 'posts', <MenuUnfoldOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
-    getItem('Sửa thông tin cá nhân', 'userInfo', <FormOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
-    getItem('Bảng giá dịch vụ', 'cast', <AuditOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
-    getItem('Liên hệ', 'contact', <PhoneOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
+    // getItem('Quản lý tin đăng', 'posts', <MenuUnfoldOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
+    // getItem('Sửa thông tin cá nhân', 'userInfo', <FormOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
+    // getItem('Bảng giá dịch vụ', 'cast', <AuditOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
+    // getItem('Liên hệ', 'contact', <PhoneOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
     getItem('Thoát', '/logout', <LogoutOutlined style={{ fontSize: 18 }} />, { fontSize: 16 }),
 ];
 

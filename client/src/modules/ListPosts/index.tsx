@@ -6,6 +6,7 @@ import { Post } from '@/models/Post';
 import { useRouter } from 'next/router';
 import * as React from 'react';
 import PostItem from './components/PostItem';
+import dynamic from 'next/dist/shared/lib/dynamic';
 
 interface propsData {}
 
@@ -68,7 +69,7 @@ const ListPosts = (props: propsData) => {
             }
         }
     }, [page, routerName, routerPrice, routerArea]);
-
+    // console.log(posts);
     return (
         <div className="w-full">
             <div className="flex flex-col gap-3 mt-2">

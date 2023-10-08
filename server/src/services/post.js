@@ -112,16 +112,6 @@ export const createNewPost = (body, userId) =>
                 id: imagesId,
                 image: JSON.stringify(body.images),
             });
-            // console.log({
-            //     id: overviewId,
-            //     code: `#${hashtag}`,
-            //     area: body.label,
-            //     type: 'Phòng trọ, nhà trọ',
-            //     target: body.target,
-            //     bonus: 'Tin thường',
-            //     created: currentDate,
-            //     expired: currentDate.setDate(currentDate.getDate() + 10),
-            // });
             await db.Overview.create({
                 id: overviewId,
                 code: `#${hashtag}`,
@@ -135,8 +125,8 @@ export const createNewPost = (body, userId) =>
             await db.Province.findOrCreate({
                 where: {
                     [Op.or]: [
-                        { value: body.provinceCode.replace('Thành phố ', ' ') },
-                        { value: body.provinceCode.replace('Tỉnh ', ' ') },
+                        { value: body.provinceCode.replace('Thành phố ', '') },
+                        { value: body.provinceCode.replace('Tỉnh ', '') },
                     ],
                 },
                 defaults: {
@@ -155,8 +145,7 @@ export const createNewPost = (body, userId) =>
                     value: body.label,
                 },
             });
-            // console.log('true');
-            resolve({ status: true });
+            resolve(true);
         } catch (err) {
             reject(err);
         }

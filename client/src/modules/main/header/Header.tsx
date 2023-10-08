@@ -27,6 +27,16 @@ const FixedTopHeader = (props: propsData) => {
     const name = useAppSelector((state: RootState) => state.auth.currentUser?.name);
     const [scrollY, setScrollY] = useState<number>(0);
 
+    const handleRouter = () => {
+        if (name) {
+            router.push('/user/newPost');
+        } else {
+            enqueueSnackbar('Vui lòng đăng nhập !', {
+                variant: 'warning',
+            });
+        }
+    };
+
     const handleLogout = () => {
         try {
             dispatch(authActions.logout());
@@ -62,9 +72,9 @@ const FixedTopHeader = (props: propsData) => {
     const menu = (
         <Menu className="absolute top-1 z-10 w-full rounded-md bg-gray-100 space-y-1">
             <Menu.Item className="border-b " key="1">
-                Đăng tin
+                <Link href="/user/newPost">Đăng tin</Link>
             </Menu.Item>
-            <Menu.Item className="border-b " key="2">
+            {/* <Menu.Item className="border-b " key="2">
                 Quản lý tin
             </Menu.Item>
             <Menu.Item className="border-b " key="3">
@@ -78,7 +88,7 @@ const FixedTopHeader = (props: propsData) => {
             </Menu.Item>
             <Menu.Item className="border-b " key="6">
                 Tin đã lưu
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item onClick={() => handleLogout()} className="border-b " key="7">
                 Đăng xuất
             </Menu.Item>
@@ -123,7 +133,7 @@ const FixedTopHeader = (props: propsData) => {
                             </>
                         )}
                         <Button
-                            onClick={() => router.push('/user/newPost')}
+                            onClick={() => handleRouter()}
                             className="flex justify-center items-center bg-[#f73859] h-10 text-white text-lg px-5 py-3 hover:opacity-90"
                         >
                             Đăng Tin Mới

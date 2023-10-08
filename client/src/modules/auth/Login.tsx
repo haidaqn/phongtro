@@ -6,7 +6,9 @@ import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Loading } from '@/components/Common';
+import { Space, Spin } from 'antd';
 
 const validationSchema = yup.object().shape({
     phone: yup
@@ -21,6 +23,7 @@ const LoginModule = () => {
     const dispatch = useAppDispatch();
     const { actionAuth } = useAppSelector((state) => state.auth);
     const { enqueueSnackbar } = useSnackbar();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const formik = useFormik({
         initialValues: {
             phone: '',
@@ -29,7 +32,11 @@ const LoginModule = () => {
         validationSchema: validationSchema,
         onSubmit: async (values) => {
             try {
+                setIsLoading(true);
                 dispatch(authActions.login(values));
+                setTimeout(function () {
+                    setIsLoading(false);
+                }, 2000);
             } catch (err) {
                 console.log(err);
             }
@@ -47,7 +54,8 @@ const LoginModule = () => {
     return (
         <AuthLayout>
             <div className="flex items-center justify-center my-7">
-                <div className="bg-white w-[600px] p-16 border rounded-lg flex flex-col gap-5">
+                <div className="bg-white w-[600px] p-16 border rounded-lg flex flex-col gap-5 relative">
+                    {isLoading && <Loading />}
                     <h1 className="text-3xl font-bold">Đăng nhập</h1>
                     <Form onFinish={formik.handleSubmit} layout="vertical">
                         <div className="mb-2">

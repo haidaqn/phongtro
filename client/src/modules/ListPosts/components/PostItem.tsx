@@ -28,7 +28,7 @@ const PostItem = (props: propsData) => {
                         }`}
                     </span>
                 </div>
-                <span className="text-gray-500 w-full  text-ellipsis">{description.slice(0, 3)}</span>
+                <span className="text-gray-500 w-full  text-ellipsis">{description}</span>
                 <div className="flex justify-between items-center ">
                     <div className="flex gap-3 items-center ">
                         <img
