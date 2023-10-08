@@ -3,7 +3,7 @@ import * as insertServices from '../services';
 
 export const insert = async (req, res) => {
     try {
-        const response = await insertServices.createUserService();
+        const response = await insertServices.createCategory();
         return res.status(200).json(response);
     } catch (error) {
         res.status(500).json({
