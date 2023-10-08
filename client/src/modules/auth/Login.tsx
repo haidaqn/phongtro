@@ -36,7 +36,7 @@ const LoginModule = () => {
                 dispatch(authActions.login(values));
                 setTimeout(function () {
                     setIsLoading(false);
-                }, 2000);
+                }, 2500);
             } catch (err) {
                 console.log(err);
             }

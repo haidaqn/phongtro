@@ -43,7 +43,7 @@ const RegisterModule = () => {
             dispatch(authActions.register(data));
             setTimeout(function () {
                 setIsLoading(false);
-            }, 1000);
+            }, 2500);
         },
     });
 
